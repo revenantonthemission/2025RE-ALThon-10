@@ -6,8 +6,7 @@ from schema import GeminiResponse, AnalysisRequest, UserProfile, CourseInfo
 from typing import List, Optional
 import time
 from collections import Counter
-from sqlalchemy.orm import Session
-from backend.models.user import User
+from backend.routers.courses import return_user_courses, return_course_info
 import json
 from loguru import logger
 from neighbor import get_similar_users
@@ -64,10 +63,9 @@ def find_recommended_course(
     for target_cid in user_target_courses:
         excluded_course_ids.add(str(target_cid))
 
-
     # 3) 선배 UserProfile 리스트 가져오기(return_course_info를 사용해)
     try:
-        senior_course_infors = return_course_info(senior_ids)
+        senior_course_infors = return_user_courses(senior_ids)
     except Exception as e:
         return None
 
@@ -147,7 +145,7 @@ def extract_profile_text(user_profile: UserProfile) -> str:
     return user_profile_str
 
 # BE에서 호출할 함수
-def return_total_result(count: int, user_profile: UserProfile, target_courses: List[CourseInfo]) -> List[GeminiResponse]:
+def return_total_result(count: int, user_profile: UserProfile, target_courses: List[CourseInfo]):
     logger.info(f"총 결과 생성 시작: count={count}")
 
     total_results: List[GeminiResponse] = []
