@@ -27,7 +27,6 @@ class UserProfile(BaseModel):
     attendence_type: List[str] = Field(description="선호하는 출석 방식")
 
 # 과목별 정보
-# TODO: Sqlalchemy 요소들에 대응되도록 보충!!
 class CourseInfo(BaseModel):
     id: int = Field(description="과목 고유 번호 (PK)")
     year: str = Field(description="개설 학년도")
