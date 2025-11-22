@@ -99,7 +99,7 @@ def create_gemini_prompt(request_data: AnalysisRequest) -> str:
     
     taken_courses_history: List[CourseHistory] = request_data.user_profile.taken_courses
 
-    taken_courses_id_list: List[int] = [history.course_id for history in taken_courses_history]
+    taken_courses_id_list: List[str] = [history.course_id for history in taken_courses_history]
 
     taken_courses_detail: List[CourseInfo] = return_course_info(taken_courses_id_list)
 
