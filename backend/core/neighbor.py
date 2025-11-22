@@ -35,7 +35,7 @@ def get_db_session():
             logger.error(f"DB 세션 종료 중 오류: {e}")
 
 # --- kNN 검색 ---
-def find_similar_users(db: Session, query_vector: List[float], k: int = 5) -> List[User]:
+def find_similar_users(db: Session, query_vector: List[float], k: int = 5) -> List[int]:
     """
     User.feature_vector 컬럼을 사용하여 PostgreSQL에서 kNN 검색을 실행하고 
     유사 유저 목록 (User 객체 리스트)을 반환합니다.
@@ -62,13 +62,13 @@ def find_similar_users(db: Session, query_vector: List[float], k: int = 5) -> Li
                 logger.debug(f"유사 사용자 ID: {ids}")
             except Exception:
                 logger.debug("유사 사용자 ID를 로깅하는 중 오류가 발생했지만 검색 결과에는 영향이 없습니다.")
-        return similar_users
+        return ids
     except Exception:
         logger.error("kNN 검색 중 오류 발생")
         raise
 
 # --- 통합 메인 파이프라인 함수 (Top K User 반환) ---
-def get_similar_users(user_profile_data: str, k: int = 5) -> List[User]:
+def get_similar_users(user_profile_data: str, k: int = 5) -> List[int]:
     """
     유저 입력 데이터를 받아 임베딩을 생성하고 kNN 검색,
     Top K 유사 유저 객체 리스트를 반환
@@ -80,7 +80,7 @@ def get_similar_users(user_profile_data: str, k: int = 5) -> List[User]:
     logger.info(f"유사 사용자 검색 시작: k={k}, 입력길이={len(user_profile_data) if user_profile_data else 0}")
     # 유저 입력 임베딩 생성
     try:
-        query_vector = generate_embeddings([user_profile_data])
+        query_vector = generate_embeddings([user_profile_data])[0]
     except Exception:
         logger.error("임베딩 생성 중 오류 발생")
         raise
@@ -91,7 +91,7 @@ def get_similar_users(user_profile_data: str, k: int = 5) -> List[User]:
     
     try:
         logger.info(f"kNN 검색 실행 (k={k})")
-        similar_users: List[User] = find_similar_users(db, query_vector, k=k)
+        similar_users: List[int] = find_similar_users(db, query_vector, k=k)
         logger.info(f"유사 사용자 검색 종료: 결과={len(similar_users)}건")
         return similar_users
     finally:
