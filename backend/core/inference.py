@@ -116,6 +116,40 @@ def call_gemini(user_prompt: AnalysisRequest):
 
     return response.text
 
+def extract_profile_text(user_profile: UserProfile) -> str:
+    """
+    UserProfile 객체에서 'taken_courses'를 제외한 모든 필드를 추출하여
+    임베딩 생성을 위한 단일 문자열로 결합합니다.
+    """
+    
+    # taken_courses를 제외하고 모든 데이터를 딕셔너리로 추출합니다.
+    user_data_dict = user_profile.model_dump(exclude={"taken_courses"}) 
+    
+    parts = []
+    
+    # 평가 방식 선호도 (eval_preference)
+    if 'eval_preference' in user_data_dict:
+        parts.append(f"평가 방식 선호도: {user_data_dict['eval_preference']} (1:시험선호, 5:과제선호)")
+    
+    # 관심 분야 (interests) - 리스트를 쉼표로 연결
+    interests: List[str] = user_data_dict.get('interests', [])
+    if interests:
+        parts.append(f"관심 분야: {', '.join(interests)}")
+        
+    # 팀 프로젝트 선호도 (team_preference)
+    if 'team_preference' in user_data_dict:
+        parts.append(f"팀 프로젝트 선호도: {user_data_dict['team_preference']} (1:매우싫음, 5:매우좋음)")
+    
+    # 선호 출석 방식 (attendence_type) - 리스트를 쉼표로 연결
+    attendance: List[str] = user_data_dict.get('attendence_type', [])
+    if attendance:
+        parts.append(f"선호 출석 방식: {', '.join(attendance)}")
+    
+    # 모든 정보를 쉼표와 공백으로 연결하여 최종 문자열 생성
+    user_profile_str = ", ".join(parts)
+    
+    return user_profile_str
+
 # BE에서 호출할 함수
 def return_total_result(count: int, user_profile: UserProfile) -> List[GeminiResponse]:
     logger.info(f"총 결과 생성 시작: count={count}")
@@ -143,11 +177,12 @@ def return_total_result(count: int, user_profile: UserProfile) -> List[GeminiRes
         senior_profiles: List[UserProfile] = get_similar_users(user_profile, k=5)
         logger.info("유사 사용자 검색 완료")
 
-        most_common_course = find_recommended_course(user_profile, senior_profiles)
+        user_profile_str = extract_profile_text(user_profile)
+        most_common_course = find_recommended_course(user_profile_str, senior_profiles)
         logger.info(f"추천 과목: {most_common_course}")
 
         total_results.append(most_common_course)
-        
+
     return total_results
 
 if __name__=="__main__":
