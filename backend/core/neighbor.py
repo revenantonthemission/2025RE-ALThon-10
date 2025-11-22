@@ -64,7 +64,7 @@ def find_similar_users(db: Session, query_vector: List[float], k: int = 5) -> Li
                 logger.debug("유사 사용자 ID를 로깅하는 중 오류가 발생했지만 검색 결과에는 영향이 없습니다.")
         return ids
     except Exception as e:
-        logger.error("kNN 검색 중 오류 발생 : {e}")
+        logger.error(f"kNN 검색 중 오류 발생 : {e}")
         raise
 
 # --- 통합 메인 파이프라인 함수 (Top K User 반환) ---
