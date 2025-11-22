@@ -42,10 +42,10 @@ jobs:
             cd /home/${{ secrets.EC2_USERNAME }}/app/docker
             
             # Pull latest images
-            docker compose -f app.yml pull
+            sudo docker compose -f app.yml pull
             
             # Restart services
-            docker compose -f app.yml up -d
+            sudo docker compose -f app.yml up -d
             
             # Cleanup unused images
-            docker system prune -f
+            sudo docker system prune -f
