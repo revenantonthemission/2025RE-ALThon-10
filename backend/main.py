@@ -1,5 +1,5 @@
 import os
-import google.generativeai as genai
+import google.genai as genai
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from dotenv import load_dotenv
@@ -31,9 +31,9 @@ async def chat(request: ChatRequest):
     # ... (existing chat logic)
     pass
 
-app.include_router(evaluate.router, prefix="/api")
-app.include_router(courses.router, prefix="/api")
-app.include_router(users.router, prefix="/api")
+app.include_router(evaluate.router)
+app.include_router(courses.router)
+app.include_router(users.router)
 
 if __name__ == "__main__":
     import uvicorn
