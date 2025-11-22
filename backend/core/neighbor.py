@@ -5,9 +5,9 @@ from os import getenv
 from dotenv import load_dotenv
 from typing import List
 import time
-from sentence_transformers import SentenceTransformer
 from backend.models.user import User
 from loguru import logger
+from encoder import generate_embeddings
 
 load_dotenv()
 
@@ -33,15 +33,6 @@ def get_db_session():
             logger.debug("DB 세션 종료")
         except Exception as e:
             logger.error(f"DB 세션 종료 중 오류: {e}")
-
-# --- 임베딩 모델 설정 ---
-EMBEDDING_MODEL_NAME = "jhgan/ko-sroberta-multitask"
-try:
-    EMBEDDER = SentenceTransformer(EMBEDDING_MODEL_NAME)
-    logger.info(f"임베딩 모델 로드 성공: {EMBEDDING_MODEL_NAME}")
-except Exception as e:
-    logger.error("임베딩 모델 로드 실패")
-    EMBEDDER = None
 
 # --- kNN 검색 ---
 def find_similar_users(db: Session, query_vector: List[float], k: int = 5) -> List[User]:
@@ -86,17 +77,10 @@ def get_similar_users(user_profile_data: str, k: int = 5) -> List[User]:
     :param k: 찾을 유사 유저의 수
     :return: Top K User 객체 리스트 (List[User])
     """
-    if EMBEDDER is None:
-        logger.error("임베딩 모델이 로드되지 않았습니다.")
-        raise RuntimeError("Embedding model not loaded.")
-    
     logger.info(f"유사 사용자 검색 시작: k={k}, 입력길이={len(user_profile_data) if user_profile_data else 0}")
     # 유저 입력 임베딩 생성
     try:
-        emb_start = time.perf_counter()
-        query_vector = EMBEDDER.encode(user_profile_data, convert_to_tensor=False).tolist()
-        emb_ms = (time.perf_counter() - emb_start) * 1000
-        logger.debug(f"임베딩 생성 완료: 차원={len(query_vector)}, 소요={emb_ms:.1f}ms")
+        query_vector = generate_embeddings([user_profile_data])
     except Exception:
         logger.error("임베딩 생성 중 오류 발생")
         raise
