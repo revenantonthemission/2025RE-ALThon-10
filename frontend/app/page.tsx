@@ -1,50 +1,27 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { LandingNavbar } from '@/components/navbar';
 import Link from 'next/link';
-
-type PreferenceData = {
-  eval_preference: number;
-  example_interests: Array<{ id: string; value: string; checked?: boolean }>;
-  interests: Array<{ value: string }>;
-  team_preference: number;
-  class_type: string[];
-};
+import { usePreferencesStore } from '@/app/_stores/preferences';
 
 export default function Home() {
   const router = useRouter();
-  const [preferences, setPreferences] = useState<PreferenceData | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const preferences = usePreferencesStore((state) => state.preferences);
 
   useEffect(() => {
-    try {
-      const stored = localStorage.getItem('userPreferences');
-      if (stored) {
-        const parsed = JSON.parse(stored) as PreferenceData;
-        setPreferences(parsed);
-      } else {
-        router.push('/preference');
-      }
-    } catch (error) {
-      console.error('Failed to load preferences:', error);
+    if (!preferences) {
       router.push('/preference');
-    } finally {
-      setIsLoading(false);
     }
-  }, [router]);
+  }, [preferences, router]);
 
-  if (isLoading) {
+  if (!preferences) {
     return (
       <div className="min-h-screen bg-base-200 flex items-center justify-center">
         <span className="loading loading-spinner loading-lg"></span>
       </div>
     );
-  }
-
-  if (!preferences) {
-    return null; // Will redirect
   }
 
   return (

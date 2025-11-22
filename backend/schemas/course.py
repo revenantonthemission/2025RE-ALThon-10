@@ -1,5 +1,8 @@
 from pydantic import BaseModel
-from typing import Optional
+from typing import Optional, TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from backend.models.course import Course as CourseModel
 
 class CourseBase(BaseModel):
     year: Optional[str] = None
@@ -29,8 +32,34 @@ class CourseBase(BaseModel):
     description: Optional[str] = None
     note: Optional[str] = None
 
-class Course(CourseBase):
+class CourseResponse(CourseBase):
     id: int
 
     class Config:
-        orm_mode = True
+        from_attributes = True
+
+# Lightweight DTO with only id and name
+class CourseSummary(BaseModel):
+    id: int
+    course_name: str
+    course_code: str
+
+    @classmethod
+    def from_model(cls, model: "CourseModel") -> "CourseSummary":
+        """
+        Create a CourseSummary instance from a Course model.
+        
+        Args:
+            model: Course model instance
+            
+        Returns:
+            New CourseSummary instance
+        """
+        return cls(
+            id=model.id,
+            course_name=model.course_name,
+            course_code=model.course_code
+        )
+    
+    class Config:
+        from_attributes = True

@@ -4,4 +4,5 @@ export { EvaluationPreferenceSlider } from './evaluation-preference-slider';
 export { InterestsInput } from './interests-input';
 export { TeamPreferenceRating } from './team-preference-rating';
 export { ClassTypeSelector } from './class-type-selector';
+export { CourseSelection } from './course-selection';
 export { PreferenceForm } from './preference-form';

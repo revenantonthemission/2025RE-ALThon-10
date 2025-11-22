@@ -50,5 +50,4 @@ class StudentForm(BaseModel):
     selected_subject_ids: List[int] = Field(..., alias="선택한 과목")
 
     class Config:
-        allow_population_by_field_name = True
         populate_by_name = True
