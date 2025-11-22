@@ -172,7 +172,6 @@ def return_total_result(count: int, user_profile: UserProfile) -> List[GeminiRes
         logger.debug(f"Gemini 결과 추가 (len={len(result) if result else 0})")
 
         # 선배들로부터 추천 과목 찾기
-        # TODO: STR로 변환시켜줘야함!!
         logger.info("유사 사용자 검색 시작")
         senior_profiles: List[UserProfile] = get_similar_users(user_profile, k=5)
         logger.info("유사 사용자 검색 완료")
