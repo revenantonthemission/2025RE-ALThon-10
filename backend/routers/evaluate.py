@@ -59,6 +59,10 @@ def evaluate_course(course_id: int, request: EvaluateRequest, db: Session = Depe
     # 5) Return response in API spec format
     return {
         "course_id": course.course_code or str(course_id),
+        "course_name": course.course_name,
+        "professor": course.professor,
+        "credits": course.credits,
+        "department": course.department,
         "details": [
             {
                 "criteria": detail.criteria,

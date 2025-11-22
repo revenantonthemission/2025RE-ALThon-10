@@ -12,7 +12,7 @@ from loguru import logger
 import sys
 import os
 
-# Add project root to path for imports (parent of backend directory)
+# Add project root to path for imports
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
 from backend.db.database import SessionLocal
