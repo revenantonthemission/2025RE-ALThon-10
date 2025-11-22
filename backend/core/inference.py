@@ -42,7 +42,7 @@ except Exception as e:
 def find_recommended_course(
     current_user,
     senior_ids: List[str],
-    db: Session
+    user_target_courses: List[str] = []
 ) -> Optional[str]:
     logger.info("추천 과목 산출 시작")
 
@@ -59,30 +59,26 @@ def find_recommended_course(
             taken_course_ids.add(str(cid))
     logger.debug(f"기수강 과목 수: {len(taken_course_ids)}")
 
-    # 2) senior_ids를 정수로 변환 후 DB에서 선배 조회
+    # 2) User가 수강 예정인 과목도 제외 집합에 추가
+    excluded_course_ids = taken_course_ids.copy()
+    for target_cid in user_target_courses:
+        excluded_course_ids.add(str(target_cid))
+
+
+    # 3) 선배 UserProfile 리스트 가져오기(return_course_info를 사용해)
     try:
-        ids_int = [int(sid) for sid in senior_ids]
-    except ValueError:
-        logger.warning("senior_ids 정수 변환 실패")
+        senior_course_infors = return_course_info(senior_ids)
+    except Exception as e:
         return None
 
-    seniors: List[User] = db.query(User).filter(User.id.in_(ids_int)).all()
-    logger.debug(f"선배 수: {len(seniors)}")
-
-    # 3) 선배들의 courses에서 현재 사용자가 듣지 않은 과목만 카운트
+    # 4) 겹치는 횟수 cnt
     counter = Counter()
-    for senior in seniors:
-        for uc in getattr(senior, "courses", []) or []:
-            cid = getattr(uc, "course_id", None) or getattr(uc, "course_code", None)
-            if cid is None:
-                continue
-            cid_str = str(cid)
-            if cid_str in taken_course_ids:
-                continue
-            counter[cid_str] += 1
-    logger.debug(f"카운트된 과목 수: {len(counter)}")
+    for course_info in senior_course_infors:
+        course_id_str = str(course_info.get("course_id") or course_info.get("id"))
+        if course_id_str not in excluded_course_ids:
+            counter[course_id_str] += 1
 
-    # 4) 가장 많이 겹치는 과목 반환
+    # 5) 가장 많이 겹치는 과목 반환
     if not counter:
         logger.info("겹치는 과목 없음")
         return None
