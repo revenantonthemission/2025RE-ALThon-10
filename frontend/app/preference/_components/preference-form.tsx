@@ -109,7 +109,7 @@ export function PreferenceForm() {
       }
       
       console.log('Form Data saved:', data);
-      router.push('/result');
+      router.push('/courses');
     } catch (error) {
       console.error('Failed to save preferences:', error);
       alert('Failed to save preferences. Please try again.');
