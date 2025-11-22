@@ -68,7 +68,7 @@ export function CourseResultTile({
               <span className="text-primary">{course.course_code}</span>
               <span className="text-base-content"> - {course.course_name}</span>
             </h2>
-            
+
             {/* Course Metadata */}
             <div className="flex flex-wrap gap-4 text-sm text-base-content/70">
               {course.professor && (
@@ -93,14 +93,14 @@ export function CourseResultTile({
           </div>
 
           {/* Match Score Badge (if provided) */}
-          {matchScore !== undefined && (
+          {/* {matchScore !== undefined && (
             <div className="stat bg-base-200 rounded-lg p-4 min-w-[120px]">
               <div className="stat-title text-xs">Match Score</div>
               <div className="stat-value text-2xl text-primary">
                 {Math.round(matchScore)}%
               </div>
             </div>
-          )}
+          )} */}
         </div>
 
         {/* Description Section (if provided) */}
