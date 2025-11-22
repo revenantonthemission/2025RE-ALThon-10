@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { useForm, useFieldArray, type Resolver } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
@@ -58,6 +59,7 @@ const getDefaultValues = (): FormData => {
 };
 
 export function PreferenceForm() {
+  const router = useRouter();
   const defaultValues: FormData = {
     eval_preference: 3,
     example_interests: defaultExampleInterests,
@@ -92,7 +94,7 @@ export function PreferenceForm() {
     try {
       localStorage.setItem('userPreferences', JSON.stringify(data));
       console.log('Form Data saved to localStorage:', data);
-      alert('Preferences saved to local storage!');
+      router.push('/result');
     } catch (error) {
       console.error('Failed to save preferences to localStorage:', error);
       alert('Failed to save preferences. Please try again.');
