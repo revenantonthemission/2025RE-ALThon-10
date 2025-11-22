@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { useForm, useFieldArray, type Resolver } from 'react-hook-form';
+import { useForm, useFieldArray, FormProvider, type Resolver } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { FormHeader } from './form-header';
@@ -10,6 +10,9 @@ import { EvaluationPreferenceSlider } from './evaluation-preference-slider';
 import { InterestsInput } from './interests-input';
 import { TeamPreferenceRating } from './team-preference-rating';
 import { ClassTypeSelector } from './class-type-selector';
+import { CourseSelection } from './course-selection';
+import type { UserPreferences } from '@/app/_types/preference';
+import { usePreferencesStore } from '@/app/_stores/preferences';
 
 const schema = z.object({
   eval_preference: z.coerce.number().min(1).max(5),
@@ -21,52 +24,29 @@ const schema = z.object({
   interests: z.array(z.object({ value: z.string().min(1, 'Required') })).min(1, 'At least one interest is required'),
   team_preference: z.coerce.number().min(1).max(5),
   class_type: z.array(z.string()).min(1, 'Select at least one option'),
+  completed_courses: z.array(z.object({
+    id: z.string(),
+    grade: z.string(),
+  })).min(1, 'At least one completed course is required'),
 });
 
 export type FormData = z.infer<typeof schema>;
 
-const defaultExampleInterests = [
-  { id: '1', value: 'Web Development', checked: false },
-  { id: '2', value: 'Data Science', checked: false },
-  { id: '3', value: 'AI/ML', checked: false },
-  { id: '4', value: 'Mobile Dev', checked: false },
-  { id: '5', value: 'UI/UX Design', checked: false },
-  { id: '6', value: 'Cloud Computing', checked: false },
-  { id: '7', value: 'Cybersecurity', checked: false },
-  { id: '8', value: 'DevOps', checked: false },
-];
+// FormData is the same as UserPreferences, but we keep both for clarity
+// FormData is used for form validation, UserPreferences for localStorage
+export type { UserPreferences };
 
-const getDefaultValues = (): FormData => {
-  try {
-    const stored = localStorage.getItem('userPreferences');
-    if (stored) {
-      const parsed = JSON.parse(stored) as FormData;
-      return {
-        ...parsed,
-        example_interests: parsed.example_interests || defaultExampleInterests,
-      };
-    }
-  } catch (error) {
-    console.error('Failed to load preferences from localStorage:', error);
-  }
-  return {
-    eval_preference: 3,
-    example_interests: defaultExampleInterests,
-    interests: [],
-    team_preference: 3,
-    class_type: [],
-  };
-};
 
 export function PreferenceForm() {
   const router = useRouter();
-  const defaultValues: FormData = {
-    eval_preference: 3,
-    example_interests: defaultExampleInterests,
-    interests: [],
-    team_preference: 3,
-    class_type: [],
-  };
+  const { preferences, setPreferences, getDefaultPreferences } = usePreferencesStore();
+  
+  const defaultValues: FormData = preferences || getDefaultPreferences();
+
+  const methods = useForm<FormData>({
+    resolver: zodResolver(schema) as Resolver<FormData>,
+    defaultValues,
+  });
 
   const {
     register,
@@ -74,15 +54,12 @@ export function PreferenceForm() {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<FormData>({
-    resolver: zodResolver(schema) as Resolver<FormData>,
-    defaultValues,
-  });
+  } = methods;
 
   useEffect(() => {
-    const storedData = getDefaultValues();
+    const storedData = preferences || getDefaultPreferences();
     reset(storedData);
-  }, [reset]);
+  }, [reset, preferences, getDefaultPreferences]);
 
   const { fields, append, remove } = useFieldArray({
     control,
@@ -92,56 +69,60 @@ export function PreferenceForm() {
 
   const onSubmit = (data: FormData) => {
     try {
-      localStorage.setItem('userPreferences', JSON.stringify(data));
-      console.log('Form Data saved to localStorage:', data);
+      setPreferences(data);
+      console.log('Form Data saved:', data);
       router.push('/result');
     } catch (error) {
-      console.error('Failed to save preferences to localStorage:', error);
+      console.error('Failed to save preferences:', error);
       alert('Failed to save preferences. Please try again.');
     }
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="card bg-base-100 shadow-xl border border-base-300 w-full max-w-3xl mx-auto overflow-hidden">
-      <div className="card-body p-8 gap-8">
-        <FormHeader
-          title="User Preferences"
-          description="Tell us about your learning style and interests"
-        />
+    <FormProvider {...methods}>
+      <form onSubmit={handleSubmit(onSubmit)} className="card bg-base-100 shadow-xl border border-base-300 w-full max-w-3xl mx-auto overflow-hidden">
+        <div className="card-body p-8 gap-8">
+          <FormHeader
+            title="User Preferences"
+            description="Tell us about your learning style and interests"
+          />
 
-        <div className="divider"></div>
+          <div className="divider"></div>
 
-        <EvaluationPreferenceSlider
-          register={register}
-          errors={errors}
-        />
+          <CourseSelection />
 
-        <InterestsInput
-          fields={fields}
-          register={register}
-          control={control}
-          errors={errors}
-          onAppend={(value) => append(value || { value: '' })}
-          onRemove={remove}
-        />
+          <EvaluationPreferenceSlider
+            register={register}
+            errors={errors}
+          />
 
-        <TeamPreferenceRating
-          register={register}
-          errors={errors}
-        />
+          <InterestsInput
+            fields={fields}
+            register={register}
+            control={control}
+            errors={errors}
+            onAppend={(value) => append(value || { value: '' })}
+            onRemove={remove}
+          />
 
-        <ClassTypeSelector
-          register={register}
-          errors={errors}
-        />
+          <TeamPreferenceRating
+            register={register}
+            errors={errors}
+          />
 
-        <div className="card-actions justify-end mt-8">
-          <button type="submit" className="btn btn-primary btn-lg w-full sm:w-auto shadow-lg hover:shadow-primary/40 transition-shadow">
-            Save Preferences
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" /></svg>
-          </button>
+          <ClassTypeSelector
+            register={register}
+            errors={errors}
+          />
+
+          <div className="card-actions justify-end mt-8">
+            <button type="submit" className="btn btn-primary btn-lg w-full sm:w-auto shadow-lg hover:shadow-primary/40 transition-shadow">
+              Save Preferences
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" /></svg>
+            </button>
+          </div>
         </div>
-      </div>
-    </form>
+      </form>
+    </FormProvider>
   );
 }
