@@ -1,17 +1,32 @@
 from pydantic import BaseModel
-from typing import Optional, TYPE_CHECKING
+from typing import Optional, TYPE_CHECKING, List
 
 if TYPE_CHECKING:
     from backend.models.course import Course as CourseModel
 
-class CourseBase(BaseModel):
+class CourseSummary(BaseModel):
+    id: int
+    course_name: str
+    course_code: str
+
+    @classmethod
+    def from_model(cls, model: "CourseModel") -> "CourseSummary":
+        return cls(
+            id=model.id,
+            course_name=model.course_name,
+            course_code=model.course_code
+        )
+
+    class Config:
+        from_attributes = True
+
+
+class CourseResponse(CourseSummary):
     year: Optional[str] = None
     semester: Optional[str] = None
     department: Optional[str] = None
     major: Optional[str] = None
-    course_code: Optional[str] = None
     division: Optional[str] = None
-    course_name: Optional[str] = None
     credits: Optional[float] = None
     class_time_room: Optional[str] = None
     hours: Optional[float] = None
@@ -32,34 +47,9 @@ class CourseBase(BaseModel):
     description: Optional[str] = None
     note: Optional[str] = None
 
-class CourseResponse(CourseBase):
-    id: int
-
     class Config:
         from_attributes = True
 
-# Lightweight DTO with only id and name
-class CourseSummary(BaseModel):
-    id: int
-    course_name: str
-    course_code: str
 
-    @classmethod
-    def from_model(cls, model: "CourseModel") -> "CourseSummary":
-        """
-        Create a CourseSummary instance from a Course model.
-        
-        Args:
-            model: Course model instance
-            
-        Returns:
-            New CourseSummary instance
-        """
-        return cls(
-            id=model.id,
-            course_name=model.course_name,
-            course_code=model.course_code
-        )
-    
-    class Config:
-        from_attributes = True
+class CourseListResponse(BaseModel):
+    courses: List[CourseSummary]
