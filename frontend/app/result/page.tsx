@@ -14,7 +14,7 @@ function ResultContent() {
   const searchParams = useSearchParams();
   const courseIdParam = searchParams.get('courseId');
   const courseId = courseIdParam ? parseInt(courseIdParam, 10) : null;
-  
+
   const preferences = usePreferencesStore((state) => state.preferences);
   const [evaluation, setEvaluation] = useState<CourseEvaluationResponse | null>(null);
   const [course, setCourse] = useState<Course | null>(null);
@@ -28,7 +28,7 @@ function ResultContent() {
     const fetchEvaluation = async () => {
       setIsLoading(true);
       setError(null);
-      
+
       try {
         // Transform preferences to UserProfile format
         const userProfile: UserProfile = {
@@ -204,7 +204,7 @@ function ResultContent() {
                   {evaluation.details.map((detail, index) => (
                     <div key={index} className="card bg-base-200 border border-base-300">
                       <div className="card-body">
-                        <div className="flex items-start justify-between gap-4">
+                        <div className="flex flex-col items-start justify-between gap-4">
                           <div className="flex-1">
                             <h3 className="font-semibold text-lg mb-2">
                               {detail.criteria}
