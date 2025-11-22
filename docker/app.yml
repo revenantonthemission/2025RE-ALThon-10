@@ -11,8 +11,6 @@ services:
     restart: unless-stopped
     ports:
       - "${FRONTEND_PORT}:3000"
-    env_file:
-      - ../frontend/.env
     networks:
       - frontend
 
