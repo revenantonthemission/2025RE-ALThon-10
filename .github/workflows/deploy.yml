@@ -15,6 +15,18 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Validate SSH Key
+        run: |
+          if [[ ! "${{ secrets.EC2_PRIVATE_KEY }}" =~ "BEGIN" ]]; then
+            echo "::error::EC2_PRIVATE_KEY seems to be missing the '-----BEGIN ... PRIVATE KEY-----' header."
+            exit 1
+          fi
+          # Check for newlines (simple heuristic: key should be long but have multiple lines or be very long)
+          LINE_COUNT=$(echo "${{ secrets.EC2_PRIVATE_KEY }}" | wc -l)
+          if [ "$LINE_COUNT" -eq 1 ]; then
+             echo "::warning::EC2_PRIVATE_KEY has only 1 line. It might be missing newlines. Ensure you pasted it correctly."
+          fi
+
       - name: Clean EC2_HOST
         run: |
           CLEAN_HOST=$(echo "${{ secrets.EC2_HOST }}" | sed -E 's|^(https?\|tcp)://||')
@@ -28,8 +40,8 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           port: 22
-          source: "docker/app.yml"
-          target: "/home/${{ secrets.EC2_USERNAME }}/app/docker"
+          source: "docker/app.yml,nginx/*"
+          target: "/home/${{ secrets.EC2_USERNAME }}/app"
 
       - name: Deploy on EC2
         uses: appleboy/ssh-action@master
