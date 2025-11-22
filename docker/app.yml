@@ -1,0 +1,58 @@
+services:
+  frontend:
+    build:
+      context: ../frontend
+      dockerfile: Dockerfile
+      args:
+        NODE_ENV: ${NODE_ENV}
+        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL}
+    image: frontend
+    container_name: frontend
+    restart: always
+    ports:
+      - "${FRONTEND_PORT:-3000}:3000"
+    env_file:
+      - ../frontend/.env
+    networks:
+      - frontend
+
+  backend:
+    build:
+      context: ../backend
+      dockerfile: Dockerfile
+    image: backend
+    container_name: backend
+    restart: always
+    ports:
+      - "${BACKEND_PORT:-8000}:8000"
+    env_file:
+      - ../backend/.env
+    networks:
+      - backend
+
+  api-gateway:
+    image: nginx
+    container_name: api-gateway
+    ports:
+      - "8080:80"
+    restart: unless-stopped
+    volumes:
+      - ../nginx:/etc/nginx
+    depends_on:
+      - backend
+      - frontend
+    deploy:
+      resources:
+        limits:
+          memory: 700M
+    networks:
+      - backend
+      - frontend
+    labels:
+      logging: "promtail"
+
+networks:
+  backend:
+    driver: bridge
+  frontend:
+    driver: bridge
