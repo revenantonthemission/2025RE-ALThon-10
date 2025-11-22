@@ -1,0 +1,1888 @@
+[
+    {
+        "id": 1,
+        "student_id": "20241000",
+        "name": "Student_1",
+        "major": "Computer Science",
+        "grade_level": 3,
+        "profile_text_raw": "관심분야: 인공지능, 딥러닝, Keras. 평가방식선호: 5점. 팀플선호: 1점. 선호출석: 오프라인.",
+        "courses": [
+            {
+                "course_code": "CSE4130",
+                "course_name": "기초머신러닝",
+                "grade_point": 4.5,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE3080",
+                "course_name": "자료구조",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4022",
+                "course_name": "오픈소스를 이용한 SW 개발 실습",
+                "grade_point": 4.5,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4170",
+                "course_name": "기초컴퓨터그래픽스",
+                "grade_point": 3.5,
+                "semester": "2023-1"
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "student_id": "20241001",
+        "name": "Student_2",
+        "major": "Computer Science",
+        "grade_level": 3,
+        "profile_text_raw": "관심분야: 머신러닝, Pytorch, AI. 평가방식선호: 5점. 팀플선호: 1점. 선호출석: 오프라인.",
+        "courses": [
+            {
+                "course_code": "CSE4175",
+                "course_name": "컴퓨터네트워크",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4010",
+                "course_name": "컴퓨터아키텍쳐",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE3016",
+                "course_name": "컴퓨터공학실험II",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4188",
+                "course_name": "암호학기초",
+                "grade_point": 3.5,
+                "semester": "2023-1"
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "student_id": "20241002",
+        "name": "Student_3",
+        "major": "Computer Science",
+        "grade_level": 3,
+        "profile_text_raw": "관심분야: 데이터분석, 딥러닝, Tensorflow. 평가방식선호: 4점. 팀플선호: 1점. 선호출석: 오프라인, 전자출석.",
+        "courses": [
+            {
+                "course_code": "CSE4110",
+                "course_name": "데이터베이스시스템",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSEQ981",
+                "course_name": "컴퓨터교과교육론",
+                "grade_point": 4.5,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4191",
+                "course_name": "SW 인턴십",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSEG321",
+                "course_name": "인간언어기술개론",
+                "grade_point": 3.0,
+                "semester": "2023-1"
+            }
+        ]
+    },
+    {
+        "id": 4,
+        "student_id": "20241003",
+        "name": "Student_4",
+        "major": "Computer Science",
+        "grade_level": 4,
+        "profile_text_raw": "관심분야: AI, ReinforcementLearning, 로봇. 평가방식선호: 5점. 팀플선호: 1점. 선호출석: 오프라인.",
+        "courses": [
+            {
+                "course_code": "CSE4186",
+                "course_name": "캡스톤디자인(캡스톤디자인)",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSEQ981",
+                "course_name": "컴퓨터교과교육론",
+                "grade_point": 3.5,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4191",
+                "course_name": "SW 인턴십",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE3080",
+                "course_name": "자료구조",
+                "grade_point": 3.5,
+                "semester": "2023-1"
+            }
+        ]
+    },
+    {
+        "id": 5,
+        "student_id": "20241004",
+        "name": "Student_5",
+        "major": "Computer Science",
+        "grade_level": 3,
+        "profile_text_raw": "관심분야: CV, Vision, 딥러닝. 평가방식선호: 5점. 팀플선호: 1점. 선호출석: 오프라인.",
+        "courses": [
+            {
+                "course_code": "CSE3016",
+                "course_name": "컴퓨터공학실험II",
+                "grade_point": 3.5,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE2003",
+                "course_name": "컴퓨터프로그래밍I",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSEG483",
+                "course_name": "기초 GPU 프로그래밍",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE3013",
+                "course_name": "소프트웨어개발도구및환경실습",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            }
+        ]
+    },
+    {
+        "id": 6,
+        "student_id": "20241005",
+        "name": "Student_6",
+        "major": "Computer Science",
+        "grade_level": 4,
+        "profile_text_raw": "관심분야: BigData, AI, 데이터엔지니어링. 평가방식선호: 4점. 팀플선호: 1점. 선호출석: 온라인.",
+        "courses": [
+            {
+                "course_code": "CSE4188",
+                "course_name": "암호학기초",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4130",
+                "course_name": "기초머신러닝",
+                "grade_point": 3.5,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4110",
+                "course_name": "데이터베이스시스템",
+                "grade_point": 3.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE3013",
+                "course_name": "소프트웨어개발도구및환경실습",
+                "grade_point": 4.5,
+                "semester": "2023-1"
+            }
+        ]
+    },
+    {
+        "id": 7,
+        "student_id": "20241006",
+        "name": "Student_7",
+        "major": "Computer Science",
+        "grade_level": 4,
+        "profile_text_raw": "관심분야: 통계, 딥러닝, 분석. 평가방식선호: 5점. 팀플선호: 2점. 선호출석: 오프라인.",
+        "courses": [
+            {
+                "course_code": "CSE4191",
+                "course_name": "SW 인턴십",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE3016",
+                "course_name": "컴퓨터공학실험II",
+                "grade_point": 4.5,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4186",
+                "course_name": "캡스톤디자인(캡스톤디자인)",
+                "grade_point": 3.5,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4110",
+                "course_name": "데이터베이스시스템",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            }
+        ]
+    },
+    {
+        "id": 8,
+        "student_id": "20241007",
+        "name": "Student_8",
+        "major": "Computer Science",
+        "grade_level": 4,
+        "profile_text_raw": "관심분야: Autonomous, AI, DeepLearning. 평가방식선호: 5점. 팀플선호: 1점. 선호출석: 오프라인.",
+        "courses": [
+            {
+                "course_code": "CSE3013",
+                "course_name": "소프트웨어개발도구및환경실습",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE3030",
+                "course_name": "컴퓨터시스템개론",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE2003",
+                "course_name": "컴퓨터프로그래밍I",
+                "grade_point": 3.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4100",
+                "course_name": "시스템프로그래밍",
+                "grade_point": 3.5,
+                "semester": "2023-1"
+            }
+        ]
+    },
+    {
+        "id": 9,
+        "student_id": "20241008",
+        "name": "Student_9",
+        "major": "Computer Science",
+        "grade_level": 4,
+        "profile_text_raw": "관심분야: Audio, Speech, AI. 평가방식선호: 5점. 팀플선호: 1점. 선호출석: 오프라인.",
+        "courses": [
+            {
+                "course_code": "CSE4100",
+                "course_name": "시스템프로그래밍",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSEQ981",
+                "course_name": "컴퓨터교과교육론",
+                "grade_point": 3.5,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE2003",
+                "course_name": "컴퓨터프로그래밍I",
+                "grade_point": 4.5,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4050",
+                "course_name": "프로그래밍언어",
+                "grade_point": 3.0,
+                "semester": "2023-1"
+            }
+        ]
+    },
+    {
+        "id": 10,
+        "student_id": "20241009",
+        "name": "Student_10",
+        "major": "Computer Science",
+        "grade_level": 3,
+        "profile_text_raw": "관심분야: GenAI, LLM, GPT. 평가방식선호: 5점. 팀플선호: 1점. 선호출석: 온라인, 전자출석.",
+        "courses": [
+            {
+                "course_code": "CSE3013",
+                "course_name": "소프트웨어개발도구및환경실습",
+                "grade_point": 4.5,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE3080",
+                "course_name": "자료구조",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE2003",
+                "course_name": "컴퓨터프로그래밍I",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4010",
+                "course_name": "컴퓨터아키텍쳐",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            }
+        ]
+    },
+    {
+        "id": 11,
+        "student_id": "20241010",
+        "name": "Student_11",
+        "major": "Computer Science",
+        "grade_level": 4,
+        "profile_text_raw": "관심분야: 인공지능, 데이터사이언스, 머신러닝. 평가방식선호: 5점. 팀플선호: 1점. 선호출석: 오프라인, 전자출석.",
+        "courses": [
+            {
+                "course_code": "CSE4191",
+                "course_name": "SW 인턴십",
+                "grade_point": 4.5,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4186",
+                "course_name": "캡스톤디자인(캡스톤디자인)",
+                "grade_point": 3.5,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE3080",
+                "course_name": "자료구조",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4020",
+                "course_name": "SW 분석 및 설계",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            }
+        ]
+    },
+    {
+        "id": 12,
+        "student_id": "20241011",
+        "name": "Student_12",
+        "major": "Computer Science",
+        "grade_level": 3,
+        "profile_text_raw": "관심분야: 시스템, 보안, 네트워크. 평가방식선호: 1점. 팀플선호: 3점. 선호출석: 오프라인.",
+        "courses": [
+            {
+                "course_code": "CSE4010",
+                "course_name": "컴퓨터아키텍쳐",
+                "grade_point": 3.5,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4187",
+                "course_name": "산학프로젝트(캡스톤디자인)",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE3080",
+                "course_name": "자료구조",
+                "grade_point": 3.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE2003",
+                "course_name": "컴퓨터프로그래밍I",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            }
+        ]
+    },
+    {
+        "id": 13,
+        "student_id": "20241012",
+        "name": "Student_13",
+        "major": "Computer Science",
+        "grade_level": 3,
+        "profile_text_raw": "관심분야: 웹개발, 프론트엔드, 백엔드. 평가방식선호: 4점. 팀플선호: 5점. 선호출석: 온라인, 녹화강의.",
+        "courses": [
+            {
+                "course_code": "CSE4020",
+                "course_name": "SW 분석 및 설계",
+                "grade_point": 4.5,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4130",
+                "course_name": "기초머신러닝",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4170",
+                "course_name": "기초컴퓨터그래픽스",
+                "grade_point": 3.5,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4175",
+                "course_name": "컴퓨터네트워크",
+                "grade_point": 3.0,
+                "semester": "2023-1"
+            }
+        ]
+    },
+    {
+        "id": 14,
+        "student_id": "20241013",
+        "name": "Student_14",
+        "major": "Computer Science",
+        "grade_level": 3,
+        "profile_text_raw": "관심분야: 기획, UI/UX, PM. 평가방식선호: 3점. 팀플선호: 5점. 선호출석: 온라인, 오프라인.",
+        "courses": [
+            {
+                "course_code": "CSE2003",
+                "course_name": "컴퓨터프로그래밍I",
+                "grade_point": 4.5,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4189",
+                "course_name": "산학과제실습",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE3013",
+                "course_name": "소프트웨어개발도구및환경실습",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSEG321",
+                "course_name": "인간언어기술개론",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            }
+        ]
+    },
+    {
+        "id": 15,
+        "student_id": "20241014",
+        "name": "Student_15",
+        "major": "Computer Science",
+        "grade_level": 3,
+        "profile_text_raw": "관심분야: 게임개발, 그래픽스. 평가방식선호: 2점. 팀플선호: 2점. 선호출석: 온라인, 전자출석.",
+        "courses": [
+            {
+                "course_code": "CSE4020",
+                "course_name": "SW 분석 및 설계",
+                "grade_point": 2.5,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSEG321",
+                "course_name": "인간언어기술개론",
+                "grade_point": 3.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE3013",
+                "course_name": "소프트웨어개발도구및환경실습",
+                "grade_point": 3.5,
+                "semester": "2023-1"
+            }
+        ]
+    },
+    {
+        "id": 16,
+        "student_id": "20241015",
+        "name": "Student_16",
+        "major": "Computer Science",
+        "grade_level": 3,
+        "profile_text_raw": "관심분야: 알고리즘, 수학, 계산이론. 평가방식선호: 1점. 팀플선호: 3점. 선호출석: 오프라인.",
+        "courses": [
+            {
+                "course_code": "CSE4130",
+                "course_name": "기초머신러닝",
+                "grade_point": 4.5,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4187",
+                "course_name": "산학프로젝트(캡스톤디자인)",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE2003",
+                "course_name": "컴퓨터프로그래밍I",
+                "grade_point": 4.5,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4188",
+                "course_name": "암호학기초",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            }
+        ]
+    },
+    {
+        "id": 17,
+        "student_id": "20241016",
+        "name": "Student_17",
+        "major": "Computer Science",
+        "grade_level": 3,
+        "profile_text_raw": "관심분야: IoT, 로보틱스, 임베디드, 아두이노. 평가방식선호: 4점. 팀플선호: 4점. 선호출석: 오프라인.",
+        "courses": [
+            {
+                "course_code": "CSE4110",
+                "course_name": "데이터베이스시스템",
+                "grade_point": 3.5,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE3013",
+                "course_name": "소프트웨어개발도구및환경실습",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4191",
+                "course_name": "SW 인턴십",
+                "grade_point": 3.5,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4188",
+                "course_name": "암호학기초",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            }
+        ]
+    },
+    {
+        "id": 18,
+        "student_id": "20241017",
+        "name": "Student_18",
+        "major": "Computer Science",
+        "grade_level": 4,
+        "profile_text_raw": "관심분야: 게임개발, 유니티, 언리얼, VR/AR. 평가방식선호: 5점. 팀플선호: 4점. 선호출석: 온라인, 전자출석.",
+        "courses": [
+            {
+                "course_code": "CSE2003",
+                "course_name": "컴퓨터프로그래밍I",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4187",
+                "course_name": "산학프로젝트(캡스톤디자인)",
+                "grade_point": 4.5,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4110",
+                "course_name": "데이터베이스시스템",
+                "grade_point": 2.5,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE3013",
+                "course_name": "소프트웨어개발도구및환경실습",
+                "grade_point": 3.5,
+                "semester": "2023-1"
+            }
+        ]
+    },
+    {
+        "id": 19,
+        "student_id": "20241018",
+        "name": "Student_19",
+        "major": "Computer Science",
+        "grade_level": 4,
+        "profile_text_raw": "관심분야: 해킹, 정보보안, 네트워크보안. 평가방식선호: 4점. 팀플선호: 2점. 선호출석: 온라인, 녹화강의.",
+        "courses": [
+            {
+                "course_code": "CSE4175",
+                "course_name": "컴퓨터네트워크",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4100",
+                "course_name": "시스템프로그래밍",
+                "grade_point": 3.5,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE2003",
+                "course_name": "컴퓨터프로그래밍I",
+                "grade_point": 3.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4130",
+                "course_name": "기초머신러닝",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            }
+        ]
+    },
+    {
+        "id": 20,
+        "student_id": "20241019",
+        "name": "Student_20",
+        "major": "Computer Science",
+        "grade_level": 4,
+        "profile_text_raw": "관심분야: 클라우드, AWS, Docker, DevOps. 평가방식선호: 5점. 팀플선호: 4점. 선호출석: 온라인.",
+        "courses": [
+            {
+                "course_code": "CSE3016",
+                "course_name": "컴퓨터공학실험II",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4189",
+                "course_name": "산학과제실습",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSEG483",
+                "course_name": "기초 GPU 프로그래밍",
+                "grade_point": 3.5,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4191",
+                "course_name": "SW 인턴십",
+                "grade_point": 3.0,
+                "semester": "2023-1"
+            }
+        ]
+    },
+    {
+        "id": 21,
+        "student_id": "20241020",
+        "name": "Student_21",
+        "major": "Computer Science",
+        "grade_level": 3,
+        "profile_text_raw": "관심분야: 핀테크, 블록체인, 금융IT, 데이터분석. 평가방식선호: 2점. 팀플선호: 3점. 선호출석: 오프라인.",
+        "courses": [
+            {
+                "course_code": "CSE4191",
+                "course_name": "SW 인턴십",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE2003",
+                "course_name": "컴퓨터프로그래밍I",
+                "grade_point": 4.5,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4010",
+                "course_name": "컴퓨터아키텍쳐",
+                "grade_point": 3.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE3016",
+                "course_name": "컴퓨터공학실험II",
+                "grade_point": 3.5,
+                "semester": "2023-1"
+            }
+        ]
+    },
+    {
+        "id": 22,
+        "student_id": "20241021",
+        "name": "Student_22",
+        "major": "Computer Science",
+        "grade_level": 3,
+        "profile_text_raw": "관심분야: 기초코딩, 웹사이트, IT교양. 평가방식선호: 3점. 팀플선호: 2점. 선호출석: 오프라인, 전자출석.",
+        "courses": [
+            {
+                "course_code": "CSE2003",
+                "course_name": "컴퓨터프로그래밍I",
+                "grade_point": 4.5,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4010",
+                "course_name": "컴퓨터아키텍쳐",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE3016",
+                "course_name": "컴퓨터공학실험II",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4110",
+                "course_name": "데이터베이스시스템",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            }
+        ]
+    },
+    {
+        "id": 23,
+        "student_id": "20241022",
+        "name": "Student_23",
+        "major": "Computer Science",
+        "grade_level": 4,
+        "profile_text_raw": "관심분야: NLP, CV, 연구, 논문. 평가방식선호: 2점. 팀플선호: 1점. 선호출석: 오프라인.",
+        "courses": [
+            {
+                "course_code": "CSE3016",
+                "course_name": "컴퓨터공학실험II",
+                "grade_point": 4.5,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4189",
+                "course_name": "산학과제실습",
+                "grade_point": 4.5,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4191",
+                "course_name": "SW 인턴십",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE2003",
+                "course_name": "컴퓨터프로그래밍I",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            }
+        ]
+    },
+    {
+        "id": 24,
+        "student_id": "20241023",
+        "name": "Student_24",
+        "major": "Computer Science",
+        "grade_level": 4,
+        "profile_text_raw": "관심분야: 창업, 서비스기획, 앱서비스. 평가방식선호: 5점. 팀플선호: 5점. 선호출석: 오프라인.",
+        "courses": [
+            {
+                "course_code": "CSE3080",
+                "course_name": "자료구조",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE3016",
+                "course_name": "컴퓨터공학실험II",
+                "grade_point": 3.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4175",
+                "course_name": "컴퓨터네트워크",
+                "grade_point": 0.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4188",
+                "course_name": "암호학기초",
+                "grade_point": 4.5,
+                "semester": "2023-1"
+            }
+        ]
+    },
+    {
+        "id": 25,
+        "student_id": "20241024",
+        "name": "Student_25",
+        "major": "Computer Science",
+        "grade_level": 4,
+        "profile_text_raw": "관심분야: 교양, 꿀강, 학점방어. 평가방식선호: 3점. 팀플선호: 4점. 선호출석: 온라인, 녹화강의.",
+        "courses": [
+            {
+                "course_code": "CSE4189",
+                "course_name": "산학과제실습",
+                "grade_point": 3.5,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE3080",
+                "course_name": "자료구조",
+                "grade_point": 3.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4020",
+                "course_name": "SW 분석 및 설계",
+                "grade_point": 2.5,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE3030",
+                "course_name": "컴퓨터시스템개론",
+                "grade_point": 3.0,
+                "semester": "2023-1"
+            }
+        ]
+    },
+    {
+        "id": 26,
+        "student_id": "20241025",
+        "name": "Student_26",
+        "major": "Computer Science",
+        "grade_level": 4,
+        "profile_text_raw": "관심분야: 알고리즘, 코딩테스트, 백준, PS. 평가방식선호: 1점. 팀플선호: 2점. 선호출석: 온라인.",
+        "courses": [
+            {
+                "course_code": "CSE3080",
+                "course_name": "자료구조",
+                "grade_point": 4.5,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4020",
+                "course_name": "SW 분석 및 설계",
+                "grade_point": 4.5,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4189",
+                "course_name": "산학과제실습",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE3030",
+                "course_name": "컴퓨터시스템개론",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            }
+        ]
+    },
+    {
+        "id": 27,
+        "student_id": "20241026",
+        "name": "Student_27",
+        "major": "Computer Science",
+        "grade_level": 4,
+        "profile_text_raw": "관심분야: React, Vue, CSS, UI디자인. 평가방식선호: 5점. 팀플선호: 4점. 선호출석: 온라인, 녹화강의.",
+        "courses": [
+            {
+                "course_code": "CSE2003",
+                "course_name": "컴퓨터프로그래밍I",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4186",
+                "course_name": "캡스톤디자인(캡스톤디자인)",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE3030",
+                "course_name": "컴퓨터시스템개론",
+                "grade_point": 3.5,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4189",
+                "course_name": "산학과제실습",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            }
+        ]
+    },
+    {
+        "id": 28,
+        "student_id": "20241027",
+        "name": "Student_28",
+        "major": "Computer Science",
+        "grade_level": 3,
+        "profile_text_raw": "관심분야: SQL, Tableau, 데이터분석, 비즈니스. 평가방식선호: 4점. 팀플선호: 3점. 선호출석: 오프라인.",
+        "courses": [
+            {
+                "course_code": "CSE2003",
+                "course_name": "컴퓨터프로그래밍I",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4130",
+                "course_name": "기초머신러닝",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4050",
+                "course_name": "프로그래밍언어",
+                "grade_point": 3.5,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4170",
+                "course_name": "기초컴퓨터그래픽스",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            }
+        ]
+    },
+    {
+        "id": 29,
+        "student_id": "20241028",
+        "name": "Student_29",
+        "major": "Computer Science",
+        "grade_level": 3,
+        "profile_text_raw": "관심분야: Spring, Java, 서버, 아키텍처. 평가방식선호: 3점. 팀플선호: 4점. 선호출석: 오프라인, 전자출석.",
+        "courses": [
+            {
+                "course_code": "CSE3080",
+                "course_name": "자료구조",
+                "grade_point": 3.5,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4050",
+                "course_name": "프로그래밍언어",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4110",
+                "course_name": "데이터베이스시스템",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE2003",
+                "course_name": "컴퓨터프로그래밍I",
+                "grade_point": 3.5,
+                "semester": "2023-1"
+            }
+        ]
+    },
+    {
+        "id": 30,
+        "student_id": "20241029",
+        "name": "Student_30",
+        "major": "Computer Science",
+        "grade_level": 4,
+        "profile_text_raw": "관심분야: 안드로이드, iOS, 플러터, 앱개발. 평가방식선호: 5점. 팀플선호: 2점. 선호출석: 온라인.",
+        "courses": [
+            {
+                "course_code": "CSE3016",
+                "course_name": "컴퓨터공학실험II",
+                "grade_point": 3.5,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE3030",
+                "course_name": "컴퓨터시스템개론",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4130",
+                "course_name": "기초머신러닝",
+                "grade_point": 4.5,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4189",
+                "course_name": "산학과제실습",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            }
+        ]
+    },
+    {
+        "id": 31,
+        "student_id": "20241030",
+        "name": "Student_31",
+        "major": "Computer Science",
+        "grade_level": 3,
+        "profile_text_raw": "관심분야: 자율주행, ROS, SLAM, 로봇. 평가방식선호: 4점. 팀플선호: 5점. 선호출석: 오프라인.",
+        "courses": [
+            {
+                "course_code": "CSE4130",
+                "course_name": "기초머신러닝",
+                "grade_point": 3.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE3013",
+                "course_name": "소프트웨어개발도구및환경실습",
+                "grade_point": 3.5,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE3030",
+                "course_name": "컴퓨터시스템개론",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4189",
+                "course_name": "산학과제실습",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            }
+        ]
+    },
+    {
+        "id": 32,
+        "student_id": "20241031",
+        "name": "Student_32",
+        "major": "Computer Science",
+        "grade_level": 3,
+        "profile_text_raw": "관심분야: 빅데이터, 인문학, 사회학, 시각화. 평가방식선호: 5점. 팀플선호: 3점. 선호출석: 오프라인.",
+        "courses": [
+            {
+                "course_code": "CSE4186",
+                "course_name": "캡스톤디자인(캡스톤디자인)",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE3080",
+                "course_name": "자료구조",
+                "grade_point": 4.5,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE3013",
+                "course_name": "소프트웨어개발도구및환경실습",
+                "grade_point": 3.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4189",
+                "course_name": "산학과제실습",
+                "grade_point": 3.5,
+                "semester": "2023-1"
+            }
+        ]
+    },
+    {
+        "id": 33,
+        "student_id": "20241032",
+        "name": "Student_33",
+        "major": "Computer Science",
+        "grade_level": 3,
+        "profile_text_raw": "관심분야: QA, 테스팅, 유지보수, 클린코드. 평가방식선호: 3점. 팀플선호: 4점. 선호출석: 온라인, 녹화강의.",
+        "courses": [
+            {
+                "course_code": "CSE3013",
+                "course_name": "소프트웨어개발도구및환경실습",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4130",
+                "course_name": "기초머신러닝",
+                "grade_point": 3.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE3030",
+                "course_name": "컴퓨터시스템개론",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4189",
+                "course_name": "산학과제실습",
+                "grade_point": 3.5,
+                "semester": "2023-1"
+            }
+        ]
+    },
+    {
+        "id": 34,
+        "student_id": "20241033",
+        "name": "Student_34",
+        "major": "Computer Science",
+        "grade_level": 3,
+        "profile_text_raw": "관심분야: 해외취업, 영어, 링크드인, 글로벌. 평가방식선호: 5점. 팀플선호: 5점. 선호출석: 오프라인.",
+        "courses": [
+            {
+                "course_code": "CSE4191",
+                "course_name": "SW 인턴십",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4188",
+                "course_name": "암호학기초",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4189",
+                "course_name": "산학과제실습",
+                "grade_point": 3.5,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE3013",
+                "course_name": "소프트웨어개발도구및환경실습",
+                "grade_point": 0.0,
+                "semester": "2023-1"
+            }
+        ]
+    },
+    {
+        "id": 35,
+        "student_id": "20241034",
+        "name": "Student_35",
+        "major": "Computer Science",
+        "grade_level": 3,
+        "profile_text_raw": "관심분야: VR, AR, 메타버스, 유니티. 평가방식선호: 5점. 팀플선호: 4점. 선호출석: 오프라인, 전자출석.",
+        "courses": [
+            {
+                "course_code": "CSEG321",
+                "course_name": "인간언어기술개론",
+                "grade_point": 3.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4186",
+                "course_name": "캡스톤디자인(캡스톤디자인)",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4050",
+                "course_name": "프로그래밍언어",
+                "grade_point": 4.5,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4010",
+                "course_name": "컴퓨터아키텍쳐",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            }
+        ]
+    },
+    {
+        "id": 36,
+        "student_id": "20241035",
+        "name": "Student_36",
+        "major": "Computer Science",
+        "grade_level": 4,
+        "profile_text_raw": "관심분야: 블록체인, 이더리움, Solidity, NFT. 평가방식선호: 5점. 팀플선호: 3점. 선호출석: 온라인.",
+        "courses": [
+            {
+                "course_code": "CSE4186",
+                "course_name": "캡스톤디자인(캡스톤디자인)",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4189",
+                "course_name": "산학과제실습",
+                "grade_point": 3.5,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4020",
+                "course_name": "SW 분석 및 설계",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSEQ981",
+                "course_name": "컴퓨터교과교육론",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            }
+        ]
+    },
+    {
+        "id": 37,
+        "student_id": "20241036",
+        "name": "Student_37",
+        "major": "Computer Science",
+        "grade_level": 3,
+        "profile_text_raw": "관심분야: Verilog, FPGA, ASIC, 반도체. 평가방식선호: 2점. 팀플선호: 2점. 선호출석: 오프라인.",
+        "courses": [
+            {
+                "course_code": "CSE4100",
+                "course_name": "시스템프로그래밍",
+                "grade_point": 4.5,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4050",
+                "course_name": "프로그래밍언어",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE2003",
+                "course_name": "컴퓨터프로그래밍I",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4189",
+                "course_name": "산학과제실습",
+                "grade_point": 3.5,
+                "semester": "2023-1"
+            }
+        ]
+    },
+    {
+        "id": 38,
+        "student_id": "20241037",
+        "name": "Student_38",
+        "major": "Computer Science",
+        "grade_level": 4,
+        "profile_text_raw": "관심분야: ETL, Hadoop, Spark, Kafka. 평가방식선호: 4점. 팀플선호: 4점. 선호출석: 온라인, 녹화강의.",
+        "courses": [
+            {
+                "course_code": "CSE4110",
+                "course_name": "데이터베이스시스템",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE3080",
+                "course_name": "자료구조",
+                "grade_point": 4.5,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4170",
+                "course_name": "기초컴퓨터그래픽스",
+                "grade_point": 3.5,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4175",
+                "course_name": "컴퓨터네트워크",
+                "grade_point": 3.0,
+                "semester": "2023-1"
+            }
+        ]
+    },
+    {
+        "id": 39,
+        "student_id": "20241038",
+        "name": "Student_39",
+        "major": "Computer Science",
+        "grade_level": 4,
+        "profile_text_raw": "관심분야: 교육, 멘토링, 알고리즘교육, 교직. 평가방식선호: 5점. 팀플선호: 5점. 선호출석: 오프라인.",
+        "courses": [
+            {
+                "course_code": "CSE3080",
+                "course_name": "자료구조",
+                "grade_point": 4.5,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE3030",
+                "course_name": "컴퓨터시스템개론",
+                "grade_point": 4.5,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4175",
+                "course_name": "컴퓨터네트워크",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSEG483",
+                "course_name": "기초 GPU 프로그래밍",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            }
+        ]
+    },
+    {
+        "id": 40,
+        "student_id": "20241039",
+        "name": "Student_40",
+        "major": "Computer Science",
+        "grade_level": 3,
+        "profile_text_raw": "관심분야: DSP, 음성인식, 미디어아트, Sound. 평가방식선호: 5점. 팀플선호: 3점. 선호출석: 오프라인, 전자출석.",
+        "courses": [
+            {
+                "course_code": "CSE4050",
+                "course_name": "프로그래밍언어",
+                "grade_point": 3.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSEG321",
+                "course_name": "인간언어기술개론",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE2003",
+                "course_name": "컴퓨터프로그래밍I",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4191",
+                "course_name": "SW 인턴십",
+                "grade_point": 3.5,
+                "semester": "2023-1"
+            }
+        ]
+    },
+    {
+        "id": 41,
+        "student_id": "20241040",
+        "name": "Student_41",
+        "major": "Computer Science",
+        "grade_level": 4,
+        "profile_text_raw": "관심분야: LLVM, Rust, 파싱, 언어설계. 평가방식선호: 1점. 팀플선호: 1점. 선호출석: 오프라인.",
+        "courses": [
+            {
+                "course_code": "CSE4175",
+                "course_name": "컴퓨터네트워크",
+                "grade_point": 4.5,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4191",
+                "course_name": "SW 인턴십",
+                "grade_point": 4.5,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4100",
+                "course_name": "시스템프로그래밍",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE3080",
+                "course_name": "자료구조",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            }
+        ]
+    },
+    {
+        "id": 42,
+        "student_id": "20241041",
+        "name": "Student_42",
+        "major": "Computer Science",
+        "grade_level": 3,
+        "profile_text_raw": "관심분야: CUDA, MPI, Supercomputer, 최적화. 평가방식선호: 3점. 팀플선호: 2점. 선호출석: 온라인.",
+        "courses": [
+            {
+                "course_code": "CSE3013",
+                "course_name": "소프트웨어개발도구및환경실습",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE3080",
+                "course_name": "자료구조",
+                "grade_point": 4.5,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSEG483",
+                "course_name": "기초 GPU 프로그래밍",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4020",
+                "course_name": "SW 분석 및 설계",
+                "grade_point": 3.5,
+                "semester": "2023-1"
+            }
+        ]
+    },
+    {
+        "id": 43,
+        "student_id": "20241042",
+        "name": "Student_43",
+        "major": "Computer Science",
+        "grade_level": 3,
+        "profile_text_raw": "관심분야: UX리서치, 사용자경험, Usability, 디자인. 평가방식선호: 5점. 팀플선호: 5점. 선호출석: 오프라인.",
+        "courses": [
+            {
+                "course_code": "CSE3016",
+                "course_name": "컴퓨터공학실험II",
+                "grade_point": 4.5,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE3013",
+                "course_name": "소프트웨어개발도구및환경실습",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4175",
+                "course_name": "컴퓨터네트워크",
+                "grade_point": 3.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4191",
+                "course_name": "SW 인턴십",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            }
+        ]
+    },
+    {
+        "id": 44,
+        "student_id": "20241043",
+        "name": "Student_44",
+        "major": "Computer Science",
+        "grade_level": 4,
+        "profile_text_raw": "관심분야: 주식, 퀀트, 알고리즘매매, 금융. 평가방식선호: 2점. 팀플선호: 2점. 선호출석: 온라인, 녹화강의.",
+        "courses": [
+            {
+                "course_code": "CSE4100",
+                "course_name": "시스템프로그래밍",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4130",
+                "course_name": "기초머신러닝",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE2003",
+                "course_name": "컴퓨터프로그래밍I",
+                "grade_point": 4.5,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4010",
+                "course_name": "컴퓨터아키텍쳐",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            }
+        ]
+    },
+    {
+        "id": 45,
+        "student_id": "20241044",
+        "name": "Student_45",
+        "major": "Computer Science",
+        "grade_level": 3,
+        "profile_text_raw": "관심분야: Cisco, 네트워크관리, 서버실, 5G. 평가방식선호: 4점. 팀플선호: 4점. 선호출석: 오프라인.",
+        "courses": [
+            {
+                "course_code": "CSE4189",
+                "course_name": "산학과제실습",
+                "grade_point": 3.5,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4175",
+                "course_name": "컴퓨터네트워크",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4186",
+                "course_name": "캡스톤디자인(캡스톤디자인)",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4022",
+                "course_name": "오픈소스를 이용한 SW 개발 실습",
+                "grade_point": 4.5,
+                "semester": "2023-1"
+            }
+        ]
+    },
+    {
+        "id": 46,
+        "student_id": "20241045",
+        "name": "Student_46",
+        "major": "Computer Science",
+        "grade_level": 3,
+        "profile_text_raw": "관심분야: DNA, 유전체, 바이오, 신약개발. 평가방식선호: 3점. 팀플선호: 2점. 선호출석: 오프라인.",
+        "courses": [
+            {
+                "course_code": "CSE3013",
+                "course_name": "소프트웨어개발도구및환경실습",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4170",
+                "course_name": "기초컴퓨터그래픽스",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4020",
+                "course_name": "SW 분석 및 설계",
+                "grade_point": 4.5,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4110",
+                "course_name": "데이터베이스시스템",
+                "grade_point": 3.5,
+                "semester": "2023-1"
+            }
+        ]
+    },
+    {
+        "id": 47,
+        "student_id": "20241046",
+        "name": "Student_47",
+        "major": "Computer Science",
+        "grade_level": 3,
+        "profile_text_raw": "관심분야: 지도, LBS, 내비게이션, 공간정보. 평가방식선호: 4점. 팀플선호: 3점. 선호출석: 온라인, 전자출석.",
+        "courses": [
+            {
+                "course_code": "CSE4187",
+                "course_name": "산학프로젝트(캡스톤디자인)",
+                "grade_point": 3.5,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4189",
+                "course_name": "산학과제실습",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSEQ981",
+                "course_name": "컴퓨터교과교육론",
+                "grade_point": 4.5,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4130",
+                "course_name": "기초머신러닝",
+                "grade_point": 3.0,
+                "semester": "2023-1"
+            }
+        ]
+    },
+    {
+        "id": 48,
+        "student_id": "20241047",
+        "name": "Student_48",
+        "major": "Computer Science",
+        "grade_level": 4,
+        "profile_text_raw": "관심분야: IT영업, 컨설팅, 솔루션, 커뮤니케이션. 평가방식선호: 5점. 팀플선호: 5점. 선호출석: 오프라인.",
+        "courses": [
+            {
+                "course_code": "CSEQ981",
+                "course_name": "컴퓨터교과교육론",
+                "grade_point": 4.5,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4130",
+                "course_name": "기초머신러닝",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE2003",
+                "course_name": "컴퓨터프로그래밍I",
+                "grade_point": 3.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE3030",
+                "course_name": "컴퓨터시스템개론",
+                "grade_point": 3.5,
+                "semester": "2023-1"
+            }
+        ]
+    },
+    {
+        "id": 49,
+        "student_id": "20241048",
+        "name": "Student_49",
+        "major": "Computer Science",
+        "grade_level": 4,
+        "profile_text_raw": "관심분야: Linux, Shell, 서버관리, 엔지니어링. 평가방식선호: 4점. 팀플선호: 2점. 선호출석: 온라인.",
+        "courses": [
+            {
+                "course_code": "CSE4130",
+                "course_name": "기초머신러닝",
+                "grade_point": 4.5,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE3080",
+                "course_name": "자료구조",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSEQ981",
+                "course_name": "컴퓨터교과교육론",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE3016",
+                "course_name": "컴퓨터공학실험II",
+                "grade_point": 3.0,
+                "semester": "2023-1"
+            }
+        ]
+    },
+    {
+        "id": 50,
+        "student_id": "20241049",
+        "name": "Student_50",
+        "major": "Computer Science",
+        "grade_level": 4,
+        "profile_text_raw": "관심분야: Quantum, Qiskit, 물리학, 미래기술. 평가방식선호: 1점. 팀플선호: 1점. 선호출석: 오프라인.",
+        "courses": [
+            {
+                "course_code": "CSE4050",
+                "course_name": "프로그래밍언어",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSEQ981",
+                "course_name": "컴퓨터교과교육론",
+                "grade_point": 4.5,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4100",
+                "course_name": "시스템프로그래밍",
+                "grade_point": 4.5,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4170",
+                "course_name": "기초컴퓨터그래픽스",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            }
+        ]
+    },
+    {
+        "id": 51,
+        "student_id": "20241050",
+        "name": "Student_51",
+        "major": "Computer Science",
+        "grade_level": 3,
+        "profile_text_raw": "관심분야: 접근성, A11y, 웹표준, 약자배려. 평가방식선호: 3점. 팀플선호: 5점. 선호출석: 온라인, 녹화강의.",
+        "courses": [
+            {
+                "course_code": "CSE4130",
+                "course_name": "기초머신러닝",
+                "grade_point": 4.5,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE3013",
+                "course_name": "소프트웨어개발도구및환경실습",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSEQ981",
+                "course_name": "컴퓨터교과교육론",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4100",
+                "course_name": "시스템프로그래밍",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            }
+        ]
+    },
+    {
+        "id": 52,
+        "student_id": "20241051",
+        "name": "Student_52",
+        "major": "Computer Science",
+        "grade_level": 4,
+        "profile_text_raw": "관심분야: 특허, 저작권, 소프트웨어법, 컴플라이언스. 평가방식선호: 2점. 팀플선호: 3점. 선호출석: 오프라인.",
+        "courses": [
+            {
+                "course_code": "CSE2003",
+                "course_name": "컴퓨터프로그래밍I",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4010",
+                "course_name": "컴퓨터아키텍쳐",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4175",
+                "course_name": "컴퓨터네트워크",
+                "grade_point": 3.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4100",
+                "course_name": "시스템프로그래밍",
+                "grade_point": 4.5,
+                "semester": "2023-1"
+            }
+        ]
+    },
+    {
+        "id": 53,
+        "student_id": "20241052",
+        "name": "Student_53",
+        "major": "Computer Science",
+        "grade_level": 4,
+        "profile_text_raw": "관심분야: 형태소분석, 언어모델, 번역, 인문학융합. 평가방식선호: 3점. 팀플선호: 2점. 선호출석: 온라인.",
+        "courses": [
+            {
+                "course_code": "CSE3080",
+                "course_name": "자료구조",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4022",
+                "course_name": "오픈소스를 이용한 SW 개발 실습",
+                "grade_point": 3.5,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE3013",
+                "course_name": "소프트웨어개발도구및환경실습",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4130",
+                "course_name": "기초머신러닝",
+                "grade_point": 3.5,
+                "semester": "2023-1"
+            }
+        ]
+    },
+    {
+        "id": 54,
+        "student_id": "20241053",
+        "name": "Student_54",
+        "major": "Computer Science",
+        "grade_level": 4,
+        "profile_text_raw": "관심분야: D3.js, Processing, 미디어아트, 시각화. 평가방식선호: 5점. 팀플선호: 4점. 선호출석: 오프라인, 전자출석.",
+        "courses": [
+            {
+                "course_code": "CSE4191",
+                "course_name": "SW 인턴십",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE2003",
+                "course_name": "컴퓨터프로그래밍I",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE3080",
+                "course_name": "자료구조",
+                "grade_point": 4.5,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE4100",
+                "course_name": "시스템프로그래밍",
+                "grade_point": 3.0,
+                "semester": "2023-1"
+            }
+        ]
+    },
+    {
+        "id": 55,
+        "student_id": "20241054",
+        "name": "Student_55",
+        "major": "Computer Science",
+        "grade_level": 3,
+        "profile_text_raw": "관심분야: 스마트시티, 환경, 공공데이터, 센서. 평가방식선호: 5점. 팀플선호: 5점. 선호출석: 오프라인.",
+        "courses": [
+            {
+                "course_code": "CSE4186",
+                "course_name": "캡스톤디자인(캡스톤디자인)",
+                "grade_point": 3.5,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE3030",
+                "course_name": "컴퓨터시스템개론",
+                "grade_point": 4.0,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE3013",
+                "course_name": "소프트웨어개발도구및환경실습",
+                "grade_point": 3.5,
+                "semester": "2023-1"
+            },
+            {
+                "course_code": "CSE2003",
+                "course_name": "컴퓨터프로그래밍I",
+                "grade_point": 3.0,
+                "semester": "2023-1"
+            }
+        ]
+    },
+    {
+        "id": 56,
+        "student_id": "20241056",
+        "name": "Student_56",
+        "major": "Computer Science",
+        "grade_level": 3,
+        "profile_text_raw": "관심분야: 보안, 시스템, AI. 평가방식선호: 4점. 팀플선호: 2점. 선호출석: 온라인, 녹화강의.",
+        "courses": [
+            {
+            "course_code": "CSE4130",
+            "course_name": "기초머신러닝",
+            "grade_point": 4.5,
+            "semester": "2023-1"
+            },
+            {
+            "course_code": "CSE4100",
+            "course_name": "시스템프로그래밍",
+            "grade_point": 4.0,
+            "semester": "2023-1"
+            }
+        ]
+    }
+]
