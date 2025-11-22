@@ -26,6 +26,9 @@ services:
       - DATABASE_URL=${DATABASE_URL}
     ports:
       - "${BACKEND_PORT}:8000"
+    volumes:
+      - model:/app/model
+
     networks:
       - backend
 
@@ -55,3 +58,6 @@ networks:
     driver: bridge
   frontend:
     driver: bridge
+
+volumes:
+  model:
