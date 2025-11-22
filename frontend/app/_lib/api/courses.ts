@@ -1,6 +1,8 @@
 import { Course, CoursesResponse } from "@/app/_types/course";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080";
+// Use empty string for relative URLs (same origin as Next.js)
+// Set NEXT_PUBLIC_API_URL="" to use same origin, or set full URL for different origin
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "/api";
 
 /**
  * Fetches the list of courses from the server
