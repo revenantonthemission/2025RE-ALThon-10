@@ -7,7 +7,7 @@ from typing import List
 import time
 from backend.models.user import User
 from loguru import logger
-from encoder import generate_embeddings
+from backend.core.encoder import generate_embeddings
 
 load_dotenv()
 

@@ -2,14 +2,14 @@ from google import genai
 from google.genai import types
 from os import getenv
 from dotenv import load_dotenv
-from schema import GeminiResponse, AnalysisRequest, UserProfile, CourseInfo
+from backend.core.schema import GeminiResponse, AnalysisRequest, UserProfile, CourseInfo
 from typing import List, Optional
 import time
 from collections import Counter
-from utils import return_user_courses, return_course_info
+from backend.core.utils import return_user_courses, return_course_info
 import json
 from loguru import logger
-from neighbor import get_similar_users
+from backend.core.neighbor import get_similar_users
 
 load_dotenv()
 

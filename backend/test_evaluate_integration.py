@@ -5,9 +5,8 @@ import os
 from unittest.mock import MagicMock, patch
 from sqlalchemy.orm import Session
 
-# Add backend and backend/core to sys.path
+# Add backend to sys.path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-sys.path.append(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "backend", "core"))
 
 from backend.routers.evaluate import evaluate_course
 from backend.schemas.student_form import StudentForm
