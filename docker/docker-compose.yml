@@ -6,7 +6,26 @@ services:
     container_name: course_simulator_backend
     environment:
       - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - DATABASE_URL=postgresql://user:password@db:5432/course_db
       - PORT=8000
     ports:
       - "8000:8000"
+    depends_on:
+      - db
     restart: unless-stopped
+
+  db:
+    image: pgvector/pgvector:pg15
+    container_name: course_simulator_db
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=course_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
