@@ -11,6 +11,11 @@ import { ClassTypeSelector } from './class-type-selector';
 
 const schema = z.object({
   eval_preference: z.coerce.number().min(1).max(5),
+  example_interests: z.array(z.object({
+    id: z.string(),
+    value: z.string(),
+    checked: z.boolean().optional(),
+  })),
   interests: z.array(z.object({ value: z.string().min(1, 'Required') })).min(1, 'At least one interest is required'),
   team_preference: z.coerce.number().min(1).max(5),
   class_type: z.array(z.string()).min(1, 'Select at least one option'),
@@ -28,7 +33,8 @@ export function PreferenceForm() {
     resolver: zodResolver(schema),
     defaultValues: {
       eval_preference: 3,
-      interests: [{ value: '' }],
+      example_interests: [{ id: '1', value: 'Web Development', checked: false }, { id: '2', value: 'Data Science', checked: false }, { id: '3', value: 'AI/ML', checked: false }, { id: '4', value: 'Mobile Dev', checked: false }, { id: '5', value: 'UI/UX Design', checked: false }, { id: '6', value: 'Cloud Computing', checked: false }, { id: '7', value: 'Cybersecurity', checked: false }, { id: '8', value: 'DevOps', checked: false }],
+      interests: [],
       team_preference: 3,
       class_type: [],
     },
@@ -38,6 +44,7 @@ export function PreferenceForm() {
     control,
     name: 'interests',
   });
+
 
   const onSubmit = (data: FormData) => {
     console.log('Form Data:', data);
@@ -63,8 +70,9 @@ export function PreferenceForm() {
         <InterestsInput
           fields={fields}
           register={register}
+          control={control}
           errors={errors}
-          onAppend={() => append({ value: '' })}
+          onAppend={(value) => append(value || { value: '' })}
           onRemove={remove}
         />
 
