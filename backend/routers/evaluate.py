@@ -1,8 +1,7 @@
 from fastapi import APIRouter
 from schemas.student_form import StudentForm
 
-router = APIRouter(prefix="/api", tags=["evaluation"])
-
+router = APIRouter(tags=["evaluation"])
 
 @router.post("/evaluate")
 def evaluate_student(form: StudentForm):
