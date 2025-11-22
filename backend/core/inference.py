@@ -54,7 +54,7 @@ def find_recommended_course(
         if hasattr(c, "course_id"):
             cid = getattr(c, "course_id")
         elif isinstance(c, dict):
-            cid = c.get("course_id") or c.get("id") or c.get("course_code")
+            cid = c.get("course_id") or c.get("id") or c.get("course_id")
         else:
             cid = c
         if cid is not None:
@@ -99,7 +99,7 @@ def create_gemini_prompt(request_data: AnalysisRequest) -> str:
     # 1. User Profile Details (similar to extract_profile_text but for the prompt)
     user_info = f"""
     --- 학생 정보 ---
-    - 기수강 과목: {', '.join([c.course_code for c in request_data.user_profile.taken_courses])}
+    - 기수강 과목: {', '.join([c.course_id for c in request_data.user_profile.taken_courses])}
     - 평가 방식 선호 (1:시험, 5:과제): {request_data.user_profile.eval_preference}
     - 관심 분야: {', '.join(request_data.user_profile.interests)}
     - 팀 프로젝트 선호 (1:매우 싫음, 5:매우 좋음): {request_data.user_profile.team_preference}
