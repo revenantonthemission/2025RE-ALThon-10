@@ -1,22 +1,21 @@
 import os
-from google import genai
-from google.genai import types
+import google.generativeai as genai
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from dotenv import load_dotenv
-from routers import evaluate
+from backend.routers import evaluate, courses
 
 load_dotenv()
 
 app = FastAPI()
 
-# Configure Gemini
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
-if not GEMINI_API_KEY:
-    print("Warning: GEMINI_API_KEY not found in environment variables.")
-
-# Initialize the Gemini client
-client = genai.Client(api_key=GEMINI_API_KEY) if GEMINI_API_KEY else None
+# Startup event to create tables
+@app.on_event("startup")
+def on_startup():
+    # Import Base and engine
+    from backend.db.database import engine, Base
+    Base.metadata.create_all(bind=engine)
+    print("Database tables created (if not exist).")
 
 class ChatRequest(BaseModel):
     prompt: str
@@ -40,6 +39,7 @@ async def chat(request: ChatRequest):
         raise HTTPException(status_code=500, detail=str(e))
 
 app.include_router(evaluate.router, prefix="/api")
+app.include_router(courses.router, prefix="/api")
 
 if __name__ == "__main__":
     import uvicorn
