@@ -1,19 +1,19 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
+import json
 
 from backend.db.database import get_db
-from backend.schemas.student_form import StudentForm
-from backend.schemas.course import CourseResponse
-from backend.core.schema import UserProfile, CourseInfo
+from backend.schemas.evaluate_request import EvaluateRequest
+from backend.core.schema import UserProfile, CourseInfo, CourseHistory, GeminiResponse
 from backend.core.inference import return_total_result
 from backend.repositories.repository import CourseRepository
 
 router = APIRouter(tags=["evaluation"])
 
 @router.post("/courses/{course_id}/evaluate")
-def evaluate_course(course_id: int, form: StudentForm, db: Session = Depends(get_db)):
+def evaluate_course(course_id: int, request: EvaluateRequest, db: Session = Depends(get_db)):
     """
-    Evaluate a course using Gemini based on the user's StudentForm.
+    Evaluates a course for a specific user profile using Gemini AI.
     """
 
     # 1) Load course from DB
@@ -25,18 +25,18 @@ def evaluate_course(course_id: int, form: StudentForm, db: Session = Depends(get
     # Convert to CourseInfo (Gemini format)
     course_info = CourseInfo.model_validate(course)
 
-    # 2) Convert StudentForm → UserProfile (Gemini format)
+    # 2) Convert EvaluateRequest → UserProfile (Gemini format)
     taken_courses = [
-        {"course_id": s.id, "grade": s.grade}
-        for s in form.pre_knowledge.completed_subjects
+        CourseHistory(course_id=tc.course_id, grade=tc.grade)
+        for tc in request.taken_courses
     ]
 
     user_profile = UserProfile(
         taken_courses=taken_courses,
-        eval_preference=form.evaluation_preference.exam_vs_assignment,
-        interests=form.aptitude.preferred_fields,
-        team_preference=form.collaboration_preference.team_project_tolerance,
-        attendence_type=form.class_and_attendance_style.attendance_method_preference,
+        eval_preference=request.eval_preference,
+        interests=request.interests,
+        team_preference=request.team_preference,
+        attendence_type=request.attendence_type,
     )
 
     # 3) Call Gemini logic
@@ -46,8 +46,24 @@ def evaluate_course(course_id: int, form: StudentForm, db: Session = Depends(get
         target_courses=[course_info]
     )
 
-    # 4) Response format
+    # 4) Parse the JSON response (return_total_result returns List[str] with JSON strings)
+    if not results or len(results) == 0:
+        raise HTTPException(status_code=500, detail="Failed to get evaluation result")
+    
+    # Parse the first result (JSON string) into GeminiResponse
+    result_json = json.loads(results[0])
+    evaluation_result = GeminiResponse.model_validate(result_json)
+
+    # 5) Return response in API spec format
     return {
-        "course_id": course_id,
-        "evaluation": results
+        "course_id": course.course_code or str(course_id),
+        "details": [
+            {
+                "criteria": detail.criteria,
+                "score": detail.score,
+                "reason": detail.reason
+            }
+            for detail in evaluation_result.details
+        ],
+        "summary": evaluation_result.summary
     }
