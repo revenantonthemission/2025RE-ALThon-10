@@ -123,15 +123,27 @@ def create_gemini_prompt(request_data: AnalysisRequest) -> str:
     """
 
     # 2. Course Information
-    course_info = f"""
-    --- 분석 대상 과목 정보 ---
-    - 과목 코드: {request_data.course_info.course_code}
-    - 과목명: {request_data.course_info.course_name}
-    - 평가 방식: {request_data.course_info.evaluation_method}
-    - 프로젝트/과제 비중: {request_data.course_info.project_ratio}
-    - 팀 과제 유무: {request_data.course_info.team_project_yn}
-    - 수업/출석 방식: {request_data.course_info.teaching_method}
-    """
+    course_info_parts = [
+        f"--- 분석 대상 과목 정보 ---",
+        f"- 과목 코드: {request_data.course_info.course_code or '정보 없음'}",
+        f"- 과목명: {request_data.course_info.course_name or '정보 없음'}",
+    ]
+    
+    # Add optional fields if they exist
+    if request_data.course_info.department:
+        course_info_parts.append(f"- 개설 학부: {request_data.course_info.department}")
+    if request_data.course_info.major:
+        course_info_parts.append(f"- 개설 학과: {request_data.course_info.major}")
+    if request_data.course_info.professor:
+        course_info_parts.append(f"- 담당 교수: {request_data.course_info.professor}")
+    if request_data.course_info.credits:
+        course_info_parts.append(f"- 학점: {request_data.course_info.credits}")
+    if request_data.course_info.description:
+        course_info_parts.append(f"- 강의 개요: {request_data.course_info.description}")
+    if request_data.course_info.remarks:
+        course_info_parts.append(f"- 비고: {request_data.course_info.remarks}")
+    
+    course_info = "\n    ".join(course_info_parts) + "\n    "
     
     # 3. Final instruction
     final_instruction = "\n\n위 학생 정보를 바탕으로 아래 과목에 대한 적합도를 분석하고 JSON 형식으로 결과를 반환하시오."
