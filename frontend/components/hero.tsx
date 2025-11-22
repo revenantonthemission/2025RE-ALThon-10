@@ -20,9 +20,9 @@ export function LandingHero() {
               Learn More
             </a>
           </div>
-          
+
           <div className="divider my-12"></div>
-          
+
           <LandingFeatures />
         </div>
       </div>

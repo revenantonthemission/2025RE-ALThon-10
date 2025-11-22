@@ -1,5 +1,5 @@
-import { LandingNavbar } from '@/components/landing/navbar';
-import { LandingHero } from '@/components/landing/hero';
+import { LandingNavbar } from '@/components/navbar';
+import { LandingHero } from '@/components/hero';
 
 export default function Home() {
   return (
