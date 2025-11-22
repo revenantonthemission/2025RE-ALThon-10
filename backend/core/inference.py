@@ -2,7 +2,7 @@ from google import genai
 from google.genai import types
 from os import getenv
 from dotenv import load_dotenv
-from backend.core.schema import GeminiResponse, AnalysisRequest, UserProfile, CourseInfo
+from backend.core.schema import GeminiResponse, AnalysisRequest, UserProfile, CourseInfo, CourseHistory
 from typing import List, Optional
 import time
 from collections import Counter
@@ -96,16 +96,21 @@ def create_gemini_prompt(request_data: AnalysisRequest) -> str:
     for the Gemini model to analyze.
     """
     
-    taken_courses_detail: List[CourseInfo] = request_data.user_profile.taken_courses
+    taken_courses_history: List[CourseHistory] = request_data.user_profile.taken_courses
+
+    taken_courses_id_list: List[int] = [history.course_id for history in taken_courses_history]
+
+    taken_courses_detail: List[CourseInfo] = return_course_info(taken_courses_id_list)
 
     course_strings = []
     
-    for course in taken_courses_detail:
+    for course, history in zip(taken_courses_detail, taken_courses_history):
         # 각 CourseInfo 객체에서 분석에 필요한 핵심 정보 추출
         course_string = (
             f"[{course.course_code}] {course.course_name} ({course.credits}학점 / {course.semester}) "
             f"담당교수: {course.professor or '미상'} / {course.department or '미상'} 개설. "
             f"강의 시간: {course.class_time_room or '미상'}"
+            f"유저가 받은 성적: {history.grade}"
         )
         course_strings.append(course_string)
 
