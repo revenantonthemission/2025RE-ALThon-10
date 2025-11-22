@@ -3,19 +3,29 @@ from sqlalchemy.orm import Session
 from typing import List
 
 from backend.db.database import get_db
-from backend.models.course import Course as CourseModel
-from backend.schemas.course import Course as CourseSchema
+from backend.repositories.repository import CourseRepository
+from backend.schemas.course import CourseSummary
 
 router = APIRouter()
 
-@router.get("/courses", response_model=List[CourseSchema])
+@router.get("/courses", response_model=List[CourseSummary])
 def read_courses(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    courses = db.query(CourseModel).offset(skip).limit(limit).all()
+    """
+    Get all courses with pagination.
+    Uses CourseRepository for data access.
+    """
+    repo = CourseRepository(db)
+    courses = repo.get_all_courses(skip=skip, limit=limit)
     return courses
 
-@router.get("/courses/{course_id}", response_model=CourseSchema)
+@router.get("/courses/{course_id}", response_model=CourseResponse)
 def read_course(course_id: int, db: Session = Depends(get_db)):
-    course = db.query(CourseModel).filter(CourseModel.id == course_id).first()
+    """
+    Get a single course by ID.
+    Uses CourseRepository for data access.
+    """
+    repo = CourseRepository(db)
+    course = repo.get_course_by_id(course_id)
     if course is None:
         raise HTTPException(status_code=404, detail="Course not found")
     return course
