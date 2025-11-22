@@ -14,7 +14,7 @@ COPY pyproject.toml ./
 RUN pip install uv
 
 # Install Python dependencies
-RUN uv sync --frozen
+RUN uv sync
 
 # Copy application code
 COPY . backend/
