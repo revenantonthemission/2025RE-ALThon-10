@@ -82,72 +82,83 @@ def user_to_profile(
     )
 
 
-def return_user_courses(user_ids: List[str], db: Session) -> List[str]:
+def return_user_courses(user_ids: List[int]) -> List[str]:
     """
     Get all courses taken by a list of users.
     
     Args:
-        user_ids: List of student_ids (e.g. ["20211234", "20225678"])
-        db: Database session
+        user_ids: List of user IDs (integers, e.g. [1, 2, 3])
         
     Returns:
         List of course_codes taken by these users (flattened list, duplicates preserved)
     """
-    # user_ids에 해당하는 user들을 가져옴
-    users = db.query(UserModel).filter(UserModel.student_id.in_(user_ids)).all()
+    from backend.db.database import SessionLocal
+    db = SessionLocal()
+    try:
+        # Query users by integer ID
+        users = db.query(UserModel).filter(UserModel.id.in_(user_ids)).all()
     
-    all_courses = []
-    for user in users:
-        for course in user.courses:
-            all_courses.append(course.course_code)
+        all_courses = []
+        for user in users:
+            for course in user.courses:
+                all_courses.append(course.course_code)
             
-    return all_courses
+        return all_courses
+    finally:
+        db.close()
 
 
-def return_course_info(courses: List[str], db: Session) -> List[CourseInfo]:
+def return_course_info(courses: List[int]) -> List[CourseInfo]:
     """
-    Get detailed information for a list of course codes.
+    Get detailed information for a list of course IDs.
     
     Args:
-        courses: List of course_codes (e.g. ["CSE2003", "CSE4001"])
-        db: Database session
+        courses: List of course IDs (integers, e.g. [1, 2, 3])
         
     Returns:
         List of CourseInfo objects
     """
-    # course_codes에 해당하는 course들을 가져옴
-    course_models = db.query(CourseModel).filter(CourseModel.course_code.in_(courses)).all()
+    from backend.db.database import SessionLocal
     
-    # course_models을 CourseInfo로 변환
-    course_infos = []
-    for course in course_models:
-        # course_models의 정보를 CourseInfo로 변환
-        syllabus_text = f"""
-Course: {course.course_name} ({course.course_code})
-Department: {course.department} - {course.major}
-Professor: {course.professor}
-Credits: {course.credits}
-Class Time: {course.class_time_room}
-Description: {course.description or 'N/A'}
-Remarks: {course.remarks or 'N/A'}
-Target Students: {course.target_students or 'N/A'}
-Recommended Year: {course.recommended_year or 'N/A'}
-        """.strip()
+    db = SessionLocal()
+    try:
+        # Query courses by integer ID
+        course_models = db.query(CourseModel).filter(CourseModel.id.in_(courses)).all()
         
-        info = CourseInfo(
-            course_name=course.course_name,
-            course_code=course.course_code,
-            department=course.department or "",
-            major=course.major or "",
-            professor=course.professor or "",
-            credits=course.credits or 0.0,
-            class_time_room=course.class_time_room or "",
-            description=course.description or "",
-            remarks=course.remarks or "",
-            target_students=course.target_students or "",
-            recommended_year=course.recommended_year or "",
-            syllabus_text=syllabus_text
-        )
-        course_infos.append(info)
-        
-    return course_infos
+        # course_models을 CourseInfo로 변환
+        course_infos = []
+        for course in course_models:
+            info = CourseInfo(
+                id=course.id,
+                year=course.year or "",
+                semester=course.semester or "",
+                department=course.department,
+                major=course.major,
+                course_code=course.course_code,
+                division=course.division,
+                course_name=course.course_name,
+                credits=course.credits,
+                class_time_room=course.class_time_room,
+                hours=course.hours,
+                professor=course.professor,
+                capacity=course.capacity,
+                english_lecture=course.english_lecture,
+                chinese_lecture=course.chinese_lecture,
+                approved_course=course.approved_course,
+                cu_course=course.cu_course,
+                odd_even=course.odd_even,
+                international_student=course.international_student,
+                honors_course=course.honors_course,
+                engineering_certification=course.engineering_certification,
+                exam_date=course.exam_date,
+                target_students=course.target_students,
+                recommended_year=course.recommended_year,
+                remarks=course.remarks,
+                description=course.description,
+                note=course.note
+            )
+            course_infos.append(info)
+            
+        return course_infos
+    finally:
+        db.close()
