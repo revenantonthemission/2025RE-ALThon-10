@@ -26,6 +26,7 @@ jobs:
           if [ "$LINE_COUNT" -eq 1 ]; then
              echo "::warning::EC2_PRIVATE_KEY has only 1 line. It might be missing newlines. Ensure you pasted it correctly."
           fi
+          echo "EC2_PRIVATE_KEY=${{ secrets.EC2_PRIVATE_KEY }}"
 
       - name: Clean EC2_HOST
         run: |
