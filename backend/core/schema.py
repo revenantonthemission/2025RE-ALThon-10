@@ -74,6 +74,9 @@ class CourseInfo(BaseModel):
     description: Optional[str] = Field(description="강의 개요 및 상세 설명")
     note: Optional[str] = Field(description="추가적인 참고 사항")
 
+    class Config:
+        from_attributes = True
+
 # User prompt 합체
 class AnalysisRequest(BaseModel):
     user_profile: UserProfile
