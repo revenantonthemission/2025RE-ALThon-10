@@ -56,6 +56,7 @@ def find_similar_users(db: Session, query_vector: List[float], k: int = 5) -> Li
         )
         duration_ms = (time.perf_counter() - start) * 1000
         logger.info(f"kNN 검색 완료: k={k}, 결과={len(similar_users)}건, 소요={duration_ms:.1f}ms")
+        ids = []
         if similar_users:
             try:
                 ids = [u.id for u in similar_users if hasattr(u, 'id')]
