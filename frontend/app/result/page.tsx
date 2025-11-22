@@ -76,12 +76,12 @@ function ResultContent() {
     fetchCourse();
   }, [courseId]);
 
-  // Invalidate cache when preferences change
+  // Refetch when preferences change
   const prevPreferencesRef = useRef(preferences);
   useEffect(() => {
-    // Only invalidate if preferences actually changed
+    // Only refetch if preferences actually changed
     if (preferences && prevPreferencesRef.current !== preferences) {
-      queryClient.invalidateQueries({ queryKey: ['evaluate-course'] });
+      queryClient.refetchQueries({ queryKey: ['evaluate-course'] });
       prevPreferencesRef.current = preferences;
     }
   }, [preferences, queryClient]);

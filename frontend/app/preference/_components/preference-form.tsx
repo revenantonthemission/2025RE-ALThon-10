@@ -72,9 +72,10 @@ export function PreferenceForm() {
   const onSubmit = (data: FormData) => {
     try {
       setPreferences(data);
-      // Refetch queries since preferences have changed
-      // This forces immediate refetch even with staleTime: Infinity
-      queryClient.refetchQueries({ queryKey: ['evaluate-course'] });
+      
+      // Remove all evaluate-course queries from cache completely
+      // This ensures fresh data will be fetched with new preferences
+      queryClient.removeQueries({ queryKey: ['evaluate-course'] });
       
       // Also clear from localStorage cache
       if (typeof window !== 'undefined') {
