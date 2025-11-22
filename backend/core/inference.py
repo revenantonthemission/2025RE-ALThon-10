@@ -67,6 +67,7 @@ def find_recommended_course(
 
     # 3) 선배 UserProfile 리스트 가져오기(return_course_info를 사용해)
     # TODO: senior를 UserProfile로 받은 상태에서, id 추출 해서 arg로 전달
+    senior_course_infors = []
     try:
         senior_course_infors = return_user_courses(senior_ids)
     except Exception as e:
@@ -75,8 +76,8 @@ def find_recommended_course(
 
     # 4) 겹치는 횟수 cnt
     counter = Counter()
-    for course_info in senior_course_infors:
-        course_id_str = str(course_info.get("course_id") or course_info.get("id"))
+    for course_id in senior_course_infors:
+        course_id_str = str(course_id)
         if course_id_str not in excluded_course_ids:
             counter[course_id_str] += 1
 
