@@ -166,15 +166,15 @@ def return_total_result(count: int, user_profile: UserProfile, target_courses: L
         logger.debug(f"Gemini 결과 추가 (len={len(result) if result else 0})")
 
         # 선배들로부터 추천 과목 찾기
-        logger.info("유사 사용자 검색 시작")
-        senior_profiles: List[UserProfile] = get_similar_users(user_profile, k=5)
-        logger.info("유사 사용자 검색 완료")
+        #logger.info("유사 사용자 검색 시작")
+        #senior_profiles: List[UserProfile] = get_similar_users(user_profile, k=5)
+        #logger.info("유사 사용자 검색 완료")
 
-        user_profile_str = extract_profile_text(user_profile)
-        most_common_course = find_recommended_course(user_profile_str, senior_profiles)
-        logger.info(f"추천 과목: {most_common_course}")
+        #user_profile_str = extract_profile_text(user_profile)
+        #most_common_course = find_recommended_course(user_profile_str, senior_profiles)
+        #logger.info(f"추천 과목: {most_common_course}")
 
-        total_results.append(most_common_course)
+        #total_results.append(most_common_course)
 
     return total_results
 
