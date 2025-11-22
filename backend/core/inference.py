@@ -1,9 +1,8 @@
 from google import genai
 from google.genai import types
 from os import getenv
-from pydantic import BaseModel
 from dotenv import load_dotenv
-from schema import GeminiResponse, AnalysisRequest, UserProfile
+from schema import GeminiResponse, AnalysisRequest, UserProfile, CourseInfo
 from typing import List, Optional
 import time
 from collections import Counter
@@ -38,7 +37,8 @@ try:
 except Exception as e:
     logger.error(f"Gemini 클라이언트 초기화 실패: {e}")
     client = None
-    
+
+# TODO: 직접 db 접근하지 않고 BE에서 제공하는 함수로 연결
 def find_recommended_course(
     current_user,
     senior_ids: List[str],
@@ -151,7 +151,7 @@ def extract_profile_text(user_profile: UserProfile) -> str:
     return user_profile_str
 
 # BE에서 호출할 함수
-def return_total_result(count: int, user_profile: UserProfile) -> List[GeminiResponse]:
+def return_total_result(count: int, user_profile: UserProfile, target_courses: List[CourseInfo]) -> List[GeminiResponse]:
     logger.info(f"총 결과 생성 시작: count={count}")
 
     total_results: List[GeminiResponse] = []
