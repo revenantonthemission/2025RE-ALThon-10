@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useForm, useFieldArray, FormProvider, type Resolver } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useQueryClient } from '@tanstack/react-query';
 import * as z from 'zod';
 import { FormHeader } from './form-header';
 import { EvaluationPreferenceSlider } from './evaluation-preference-slider';
@@ -39,6 +40,7 @@ export type { UserPreferences };
 
 export function PreferenceForm() {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const { preferences, setPreferences, getDefaultPreferences } = usePreferencesStore();
   
   const defaultValues: FormData = preferences || getDefaultPreferences();
@@ -70,6 +72,42 @@ export function PreferenceForm() {
   const onSubmit = (data: FormData) => {
     try {
       setPreferences(data);
+      // Refetch queries since preferences have changed
+      // This forces immediate refetch even with staleTime: Infinity
+      queryClient.refetchQueries({ queryKey: ['evaluate-course'] });
+      
+      // Also clear from localStorage cache
+      if (typeof window !== 'undefined') {
+        try {
+          const CACHE_KEY = 'REACT_QUERY_CACHE';
+          const cached = localStorage.getItem(CACHE_KEY);
+          if (cached) {
+            const entry: { data?: Record<string, unknown>; timestamp?: number } = JSON.parse(cached);
+            if (entry.data) {
+              // Remove all evaluate-course entries from localStorage cache
+              const filteredData: Record<string, unknown> = {};
+              Object.entries(entry.data).forEach(([key, value]) => {
+                try {
+                  const queryKey = JSON.parse(key) as unknown[];
+                  // Keep only queries that are NOT evaluate-course
+                  if (queryKey[0] !== 'evaluate-course') {
+                    filteredData[key] = value;
+                  }
+                } catch {
+                  // Keep invalid keys as-is
+                  filteredData[key] = value;
+                }
+              });
+              entry.data = filteredData;
+              // Note: We don't update timestamp since we're only filtering, not adding new data
+              localStorage.setItem(CACHE_KEY, JSON.stringify(entry));
+            }
+          }
+        } catch (error) {
+          console.error('Failed to clear localStorage cache:', error);
+        }
+      }
+      
       console.log('Form Data saved:', data);
       router.push('/result');
     } catch (error) {

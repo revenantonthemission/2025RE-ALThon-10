@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { RadarChart, type RadarChartData } from './_components/radar-chart';
 import { CourseResultTile, type CourseInfo } from './_components/course-result-tile';
+import { RecommendationTile } from './_components/recommendation-tile';
 import { usePreferencesStore } from '@/app/_stores/preferences';
 import { evaluateCourse, getCourses } from '@/app/_lib/api/courses';
 import type {
@@ -259,6 +260,11 @@ function ResultContent() {
                 </div>
               </div>
             </div>
+          )}
+
+          {/* Recommendation Tile */}
+          {evaluation.recommendation && (
+            <RecommendationTile recommendedCourseId={evaluation.recommendation} />
           )}
 
           {/* Action Buttons */}
