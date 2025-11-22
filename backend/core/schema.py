@@ -15,7 +15,7 @@ class GeminiResponse(BaseModel):
 
 # 각 과목별 유저 성적
 class CourseHistory(BaseModel):
-    course_id: str
+    course_id: int
     grade: str
     
     class Config:

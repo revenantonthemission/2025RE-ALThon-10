@@ -1,5 +1,5 @@
 from typing import List
-from core.schema import UserProfile, CourseHistory
+from backend.core.schema import UserProfile, CourseHistory
 
 # --- 엄청 긴 데이터 리스트 ---
 FULL_DUMMY_DATA: List[UserProfile] = [

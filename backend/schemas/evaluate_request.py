@@ -3,7 +3,7 @@ from pydantic import BaseModel, Field
 
 
 class TakenCourse(BaseModel):
-    course_id: str = Field(description="Course code (e.g., 'CSE2003')")
+    course_id: int = Field(description="Course ID (integer primary key)")
     grade: str = Field(description="Grade received (e.g., 'A', 'B+')")
 
 
