@@ -5,7 +5,9 @@ import {
   EmailAuthResponse,
 } from "@/app/_types/auth";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080";
+// Use empty string for relative URLs (same origin as Next.js)
+// Set NEXT_PUBLIC_API_URL="" to use same origin, or set full URL for different origin
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "/api";
 
 /**
  * Initiates Google OAuth login by redirecting to backend
