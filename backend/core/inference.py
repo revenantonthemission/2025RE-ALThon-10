@@ -18,7 +18,7 @@ SYSPROMPT = """
 You are an expert academic advisor specializing in predicting is a student is fit for certain university courses. 
 
 You will be provided the student's following information:
-- The student's prior taken classes
+- The student's prior taken classes (the information text will be long by nature, but the length doesn't necessarily mean importance. Refer to it with objectivity.)
 - Evaluation method preference, projects/assignments(1) vs. written tests(5) 
 - Interested areas as keywords
 - Emphasis on cooperative projects/assignments (Prefer team project: 5 - Hate team project: 1)
@@ -96,10 +96,26 @@ def create_gemini_prompt(request_data: AnalysisRequest) -> str:
     for the Gemini model to analyze.
     """
     
+    taken_courses_detail: List[CourseInfo] = request_data.user_profile.taken_courses
+
+    course_strings = []
+    
+    for course in taken_courses_detail:
+        # 각 CourseInfo 객체에서 분석에 필요한 핵심 정보 추출
+        course_string = (
+            f"[{course.course_code}] {course.course_name} ({course.credits}학점 / {course.semester}) "
+            f"담당교수: {course.professor or '미상'} / {course.department or '미상'} 개설. "
+            f"강의 시간: {course.class_time_room or '미상'}"
+        )
+        course_strings.append(course_string)
+
+    # 모든 과목 정보를 줄바꿈으로 구분하여 하나의 문자열로 결합
+    taken_courses_detail_str = "\n".join(course_strings) or "없음"
+
     # 1. User Profile Details (similar to extract_profile_text but for the prompt)
     user_info = f"""
     --- 학생 정보 ---
-    - 기수강 과목: {', '.join([str(c.course_id) for c in request_data.user_profile.taken_courses])}
+    - 기수강 과목: {taken_courses_detail_str}
     - 평가 방식 선호 (1:시험, 5:과제): {request_data.user_profile.eval_preference}
     - 관심 분야: {', '.join(request_data.user_profile.interests)}
     - 팀 프로젝트 선호 (1:매우 싫음, 5:매우 좋음): {request_data.user_profile.team_preference}
