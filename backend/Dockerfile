@@ -17,10 +17,13 @@ RUN pip install uv
 RUN uv sync --frozen
 
 # Copy application code
-COPY . .
+COPY . backend/
+
+# Set PYTHONPATH to include /app so 'backend' package is found
+ENV PYTHONPATH=/app
 
 # Expose port
 EXPOSE 8000
 
 # Run the application
-CMD ["uv", "run", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uv", "run", "uvicorn", "backend.main:app", "--host", "0.0.0.0", "--port", "8000"]
