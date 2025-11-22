@@ -1,11 +1,11 @@
 {
     "taken_courses": [
         {
-            "course_id": "CS101",
+            "course_id": 1,
             "grade": "A"
         },
         {
-            "course_id": "MATH201",
+            "course_id": 2,
             "grade": "B+"
         }
     ],
