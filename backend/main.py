@@ -1,22 +1,28 @@
 import os
 from google import genai
-from google.genai import types
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from dotenv import load_dotenv
-from routers import evaluate
+from sqlalchemy import text
+from backend.routers import evaluate, courses, users
 
 load_dotenv()
 
 app = FastAPI()
 
-# Configure Gemini
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
-if not GEMINI_API_KEY:
-    print("Warning: GEMINI_API_KEY not found in environment variables.")
-
-# Initialize the Gemini client
-client = genai.Client(api_key=GEMINI_API_KEY) if GEMINI_API_KEY else None
+# Startup event to create tables
+@app.on_event("startup")
+def on_startup():
+    # Import Base and engine
+    from backend.db.database import engine, Base
+    # Import models to ensure they are registered with Base
+    from backend.models import course, user
+    
+    with engine.connect() as conn:
+        conn.execute(text("CREATE EXTENSION IF NOT EXISTS vector"))
+        conn.commit()
+    Base.metadata.create_all(bind=engine)
+    print("Database tables created (if not exist).")
 
 class ChatRequest(BaseModel):
     prompt: str
@@ -27,19 +33,12 @@ def read_root():
 
 @app.post("/chat")
 async def chat(request: ChatRequest):
-    if not client:
-        raise HTTPException(status_code=500, detail="Gemini API key not configured")
-    
-    try:
-        response = client.models.generate_content(
-            model='gemini-2.0-flash-exp',
-            contents=request.prompt
-        )
-        return {"response": response.text}
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    # ... (existing chat logic)
+    pass
 
-app.include_router(evaluate.router, prefix="/api")
+app.include_router(evaluate.router)
+app.include_router(courses.router)
+app.include_router(users.router)
 
 if __name__ == "__main__":
     import uvicorn

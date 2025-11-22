@@ -3,6 +3,7 @@ version: '3'
 vars:
   GOOS: "{{default OS .GOOS}}"
   DC_FILE: "docker/app.yml"
+  DB_FILE: "docker/db.yml"
   SLEEP_CMD: '{{if eq .GOOS "windows"}}timeout{{else}}sleep{{end}}'
 
 tasks:
@@ -18,19 +19,19 @@ tasks:
   build:
     desc: "Build docker images"
     cmds:
-      - "docker compose -f {{.DC_FILE}} build"
+      - "docker compose -f {{.DC_FILE}} -f {{.DB_FILE}} build"
 
   start:
     desc: "Start services"
     deps: [build]
     cmds:
-      - "docker compose -f {{.DC_FILE}} up -d"
+      - "docker compose -f {{.DC_FILE}} -f {{.DB_FILE}} up -d"
 
   stop:
     desc: "Stop services"
     cmds:
-      - "docker compose -f {{.DC_FILE}} stop"
-      - "docker compose -f {{.DC_FILE}} rm -f"
+      - "docker compose -f {{.DC_FILE}} -f {{.DB_FILE}} stop"
+      - "docker compose -f {{.DC_FILE}} -f {{.DB_FILE}} rm -f"
 
   restart:
     desc: "Restart services"
