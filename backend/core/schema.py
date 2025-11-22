@@ -33,10 +33,23 @@ class UserProfile(BaseModel):
         from_attributes = True
 
 # 과목별 정보
-# TODO: Sqlalchemy 요소들에 대응되도록 보충!!
+# 과목별 정보
 class CourseInfo(BaseModel):
     course_name: str = Field(description="강의명")
+    course_code: str = Field(description="학수번호")
+    department: str = Field(description="개설학과")
+    major: str = Field(description="개설전공")
+    professor: str = Field(description="교수님")
+    credits: float = Field(description="학점")
+    class_time_room: str = Field(description="강의시간/강의실")
+    description: str = Field(description="과목설명")
+    remarks: str = Field(description="비고")
+    target_students: str = Field(description="수강대상")
+    recommended_year: str = Field(description="권장학년")
     syllabus_text: str = Field(description="강의계획서 전체 텍스트")
+
+    class Config:
+        from_attributes = True
 
 # User prompt 합체
 class AnalysisRequest(BaseModel):
