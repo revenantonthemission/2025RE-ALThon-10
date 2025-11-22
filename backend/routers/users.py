@@ -18,7 +18,8 @@ def create_user(user: UserCreate, db: Session = Depends(get_db)):
         student_id=user.student_id,
         name=user.name,
         major=user.major,
-        grade_level=user.grade_level
+        grade_level=user.grade_level,
+        embedding=user.embedding
     )
     db.add(new_user)
     db.commit()
