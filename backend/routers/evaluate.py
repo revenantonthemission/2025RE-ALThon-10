@@ -23,10 +23,7 @@ def evaluate_course(course_id: int, form: StudentForm, db: Session = Depends(get
         raise HTTPException(status_code=404, detail="Course not found")
 
     # Convert to CourseInfo (Gemini format)
-    course_info = CourseInfo(
-        course_name=course.course_name,
-        syllabus_text=course.description or ""
-    )
+    course_info = CourseInfo.model_validate(course)
 
     # 2) Convert StudentForm → UserProfile (Gemini format)
     taken_courses = [

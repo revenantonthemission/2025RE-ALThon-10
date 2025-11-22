@@ -13,6 +13,7 @@ from neighbor import get_similar_users
 
 load_dotenv()
 
+
 SYSPROMPT = """
 You are an expert academic advisor specializing in predicting is a student is fit for certain university courses. 
 
@@ -30,8 +31,10 @@ Candidate courses and the student's individual information will be provided belo
 Write all text content in Korean.
 """
 
+GOOGLE_API_KEY = getenv("GOOGLE_API_KEY")
+
 try:
-    client = genai.Client()
+    client = genai.Client(api_key=GOOGLE_API_KEY)
     logger.info("Gemini 클라이언트 초기화 완료")
 except Exception as e:
     logger.error(f"Gemini 클라이언트 초기화 실패: {e}")
