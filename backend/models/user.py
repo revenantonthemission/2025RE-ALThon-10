@@ -12,7 +12,7 @@ class User(Base):
     name = Column(String)
     major = Column(String)
     grade_level = Column(Integer)
-    embedding = Column(Vector(1024))  # 1024-dimensional vector for Gemini embeddings
+    embedding = Column(Vector(768))  # 768-dimensional vector for Gemini embeddings
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
