@@ -1,59 +1,43 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useMemo } from 'react';
+import Link from 'next/link';
 import { RadarChart, type RadarChartData } from './_components/radar-chart';
-
-interface UserPreferences {
-  eval_preference: number;
-  team_preference: number;
-  interests: { value: string }[];
-  class_type: string[];
-}
+import { usePreferencesStore } from '@/app/_stores/preferences';
 
 export default function ResultPage() {
-  const [preferences, setPreferences] = useState<UserPreferences | null>(null);
-  const [chartData, setChartData] = useState<RadarChartData | null>(null);
+  const preferences = usePreferencesStore((state) => state.preferences);
 
-  useEffect(() => {
-    // Load preferences from localStorage
-    try {
-      const stored = localStorage.getItem('userPreferences');
-      if (stored) {
-        const parsed = JSON.parse(stored) as UserPreferences;
-        setPreferences(parsed);
-        
-        // Generate chart data from preferences
-        // Colors will be applied by RadarChart component based on theme
-        const data: RadarChartData = {
-          labels: [
-            'Evaluation Preference',
-            'Team Preference',
-            'Interests Count',
-            'Class Type Count',
-            'Engagement Level',
-            'Collaboration',
+  const chartData = useMemo<RadarChartData | null>(() => {
+    if (!preferences) return null;
+
+    // Generate chart data from preferences
+    // Colors will be applied by RadarChart component based on theme
+    return {
+      labels: [
+        'Evaluation Preference',
+        'Team Preference',
+        'Interests Count',
+        'Class Type Count',
+        'Engagement Level',
+        'Collaboration',
+      ],
+      datasets: [
+        {
+          label: 'Your Profile',
+          data: [
+            (preferences.eval_preference / 5) * 100, // Convert 1-5 scale to 0-100
+            (preferences.team_preference / 5) * 100, // Convert 1-5 scale to 0-100
+            Math.min((preferences.interests?.length || 0) * 20, 100), // Interests count (max 5 = 100)
+            Math.min((preferences.class_type?.length || 0) * 33.33, 100), // Class types (max 3 = 100)
+            ((preferences.eval_preference + preferences.team_preference) / 10) * 100, // Average engagement
+            (preferences.team_preference / 5) * 100, // Collaboration score
           ],
-          datasets: [
-            {
-              label: 'Your Profile',
-              data: [
-                (parsed.eval_preference / 5) * 100, // Convert 1-5 scale to 0-100
-                (parsed.team_preference / 5) * 100, // Convert 1-5 scale to 0-100
-                Math.min((parsed.interests?.length || 0) * 20, 100), // Interests count (max 5 = 100)
-                Math.min((parsed.class_type?.length || 0) * 33.33, 100), // Class types (max 3 = 100)
-                ((parsed.eval_preference + parsed.team_preference) / 10) * 100, // Average engagement
-                (parsed.team_preference / 5) * 100, // Collaboration score
-              ],
-              // Colors will be automatically applied by RadarChart component based on theme
-            },
-          ],
-        };
-        setChartData(data);
-      }
-    } catch (error) {
-      console.error('Failed to load preferences:', error);
-    }
-  }, []);
+          // Colors will be automatically applied by RadarChart component based on theme
+        },
+      ],
+    };
+  }, [preferences]);
 
   if (!preferences || !chartData) {
     return (
@@ -178,12 +162,12 @@ export default function ResultPage() {
         <div className="card bg-base-100 shadow-xl border border-base-300">
           <div className="card-body">
             <div className="card-actions justify-end">
-              <a href="/preference" className="btn btn-outline">
+              <Link href="/preference" className="btn btn-outline">
                 Edit Preferences
-              </a>
-              <a href="/" className="btn btn-primary">
+              </Link>
+              <Link href="/" className="btn btn-primary">
                 Back to Home
-              </a>
+              </Link>
             </div>
           </div>
         </div>
