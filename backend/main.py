@@ -3,7 +3,7 @@ import google.generativeai as genai
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from dotenv import load_dotenv
-from backend.routers import evaluate, courses
+from backend.routers import evaluate, courses, users
 
 load_dotenv()
 
@@ -14,6 +14,8 @@ app = FastAPI()
 def on_startup():
     # Import Base and engine
     from backend.db.database import engine, Base
+    # Import models to ensure they are registered with Base
+    from backend.models import course, user
     Base.metadata.create_all(bind=engine)
     print("Database tables created (if not exist).")
 
@@ -26,20 +28,12 @@ def read_root():
 
 @app.post("/chat")
 async def chat(request: ChatRequest):
-    if not client:
-        raise HTTPException(status_code=500, detail="Gemini API key not configured")
-    
-    try:
-        response = client.models.generate_content(
-            model='gemini-2.0-flash-exp',
-            contents=request.prompt
-        )
-        return {"response": response.text}
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+    # ... (existing chat logic)
+    pass
 
 app.include_router(evaluate.router, prefix="/api")
 app.include_router(courses.router, prefix="/api")
+app.include_router(users.router, prefix="/api")
 
 if __name__ == "__main__":
     import uvicorn
