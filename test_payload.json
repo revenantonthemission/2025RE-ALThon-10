@@ -1,0 +1,23 @@
+{
+    "taken_courses": [
+        {
+            "course_id": "CS101",
+            "grade": "A"
+        },
+        {
+            "course_id": "MATH201",
+            "grade": "B+"
+        }
+    ],
+    "eval_preference": 1,
+    "interests": [
+        "AI",
+        "Machine Learning",
+        "Deep Learning"
+    ],
+    "team_preference": 3,
+    "attendence_type": [
+        "Online",
+        "Hybrid"
+    ]
+}
