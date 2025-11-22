@@ -7,7 +7,7 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080";
  * Backend returns an array directly, but we normalize it to always return Course[]
  */
 export async function getCourses(): Promise<Course[]> {
-  const response = await fetch(`${API_URL}/api/courses`, {
+  const response = await fetch(`${API_URL}/courses`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

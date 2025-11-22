@@ -18,14 +18,14 @@ def read_courses(skip: int = 0, limit: int = 100, db: Session = Depends(get_db))
     courses = repo.get_all_courses(skip=skip, limit=limit)
     return courses
 
-@router.get("/courses/{course_id}", response_model=CourseResponse)
-def read_course(course_id: int, db: Session = Depends(get_db)):
-    """
-    Get a single course by ID.
-    Uses CourseRepository for data access.
-    """
-    repo = CourseRepository(db)
-    course = repo.get_course_by_id(course_id)
-    if course is None:
-        raise HTTPException(status_code=404, detail="Course not found")
-    return course
+# @router.get("/courses/{course_id}", response_model=CourseResponse)
+# def read_course(course_id: int, db: Session = Depends(get_db)):
+#     """
+#     Get a single course by ID.
+#     Uses CourseRepository for data access.
+#     """
+#     repo = CourseRepository(db)
+#     course = repo.get_course_by_id(course_id)
+#     if course is None:
+#         raise HTTPException(status_code=404, detail="Course not found")
+#     return course
