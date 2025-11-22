@@ -4,6 +4,7 @@ from google.genai import types
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from dotenv import load_dotenv
+from routers import evaluate
 
 load_dotenv()
 
@@ -37,6 +38,8 @@ async def chat(request: ChatRequest):
         return {"response": response.text}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+app.include_router(evaluate.router, prefix="/api")
 
 if __name__ == "__main__":
     import uvicorn
