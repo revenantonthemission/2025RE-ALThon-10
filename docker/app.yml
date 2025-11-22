@@ -10,7 +10,7 @@ services:
     container_name: frontend
     restart: unless-stopped
     ports:
-      - "${FRONTEND_PORT:-3000}:3000"
+      - "${FRONTEND_PORT}:3000"
     env_file:
       - ../frontend/.env
     networks:
@@ -27,9 +27,7 @@ services:
       - GEMINI_API_KEY=${GEMINI_API_KEY}
       - DATABASE_URL=${DATABASE_URL}
     ports:
-      - "${PORT}:8000"
-    env_file:
-      - ../backend/.env
+      - "${BACKEND_PORT}:8000"
     networks:
       - backend
 
@@ -37,7 +35,7 @@ services:
     image: nginx
     container_name: api-gateway
     ports:
-      - "8080:80"
+      - "${NGNIX_PORT}:80"
     restart: unless-stopped
     volumes:
       - ../nginx:/etc/nginx
