@@ -1,5 +1,6 @@
 import { UseFormRegister, FieldErrors, UseFieldArrayReturn, Control, useWatch } from 'react-hook-form';
 import { ErrorMessage } from './error-message';
+import type { FormData } from './preference-form';
 
 const EXAMPLE_INTERESTS = [
   "Web Development",
@@ -13,10 +14,10 @@ const EXAMPLE_INTERESTS = [
 ];
 
 interface InterestsInputProps {
-  fields: UseFieldArrayReturn<any, 'interests'>['fields'];
-  register: UseFormRegister<any>;
-  control: Control<any>;
-  errors: FieldErrors;
+  fields: UseFieldArrayReturn<FormData, 'interests'>['fields'];
+  register: UseFormRegister<FormData>;
+  control: Control<FormData>;
+  errors: FieldErrors<FormData>;
   onAppend: (value?: { value: string }) => void;
   onRemove: (index: number) => void;
 }
@@ -27,7 +28,7 @@ export function InterestsInput({ fields, register, control, errors, onAppend, on
     name: 'interests',
   });
 
-  const currentInterests = watchedInterests?.map((item: any) => item.value) || [];
+  const currentInterests = watchedInterests?.map((item) => item.value) || [];
 
   const toggleInterest = (interest: string) => {
     const index = currentInterests.findIndex((val: string) => val === interest);
@@ -82,7 +83,7 @@ export function InterestsInput({ fields, register, control, errors, onAppend, on
               type="button"
               className="btn btn-square join-item btn-outline btn-error hover:bg-error hover:text-error-content transition-colors"
               onClick={() => onRemove(index)}
-              disabled={fields.length === 1 && index === 0}
+              disabled={false}
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>
             </button>

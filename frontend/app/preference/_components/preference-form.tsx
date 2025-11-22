@@ -1,6 +1,7 @@
 'use client';
 
-import { useForm, useFieldArray } from 'react-hook-form';
+import { useEffect } from 'react';
+import { useForm, useFieldArray, type Resolver } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { FormHeader } from './form-header';
@@ -21,24 +22,65 @@ const schema = z.object({
   class_type: z.array(z.string()).min(1, 'Select at least one option'),
 });
 
-type FormData = z.infer<typeof schema>;
+export type FormData = z.infer<typeof schema>;
+
+const defaultExampleInterests = [
+  { id: '1', value: 'Web Development', checked: false },
+  { id: '2', value: 'Data Science', checked: false },
+  { id: '3', value: 'AI/ML', checked: false },
+  { id: '4', value: 'Mobile Dev', checked: false },
+  { id: '5', value: 'UI/UX Design', checked: false },
+  { id: '6', value: 'Cloud Computing', checked: false },
+  { id: '7', value: 'Cybersecurity', checked: false },
+  { id: '8', value: 'DevOps', checked: false },
+];
+
+const getDefaultValues = (): FormData => {
+  try {
+    const stored = localStorage.getItem('userPreferences');
+    if (stored) {
+      const parsed = JSON.parse(stored) as FormData;
+      return {
+        ...parsed,
+        example_interests: parsed.example_interests || defaultExampleInterests,
+      };
+    }
+  } catch (error) {
+    console.error('Failed to load preferences from localStorage:', error);
+  }
+  return {
+    eval_preference: 3,
+    example_interests: defaultExampleInterests,
+    interests: [],
+    team_preference: 3,
+    class_type: [],
+  };
+};
 
 export function PreferenceForm() {
+  const defaultValues: FormData = {
+    eval_preference: 3,
+    example_interests: defaultExampleInterests,
+    interests: [],
+    team_preference: 3,
+    class_type: [],
+  };
+
   const {
     register,
     control,
     handleSubmit,
+    reset,
     formState: { errors },
-  } = useForm({
-    resolver: zodResolver(schema),
-    defaultValues: {
-      eval_preference: 3,
-      example_interests: [{ id: '1', value: 'Web Development', checked: false }, { id: '2', value: 'Data Science', checked: false }, { id: '3', value: 'AI/ML', checked: false }, { id: '4', value: 'Mobile Dev', checked: false }, { id: '5', value: 'UI/UX Design', checked: false }, { id: '6', value: 'Cloud Computing', checked: false }, { id: '7', value: 'Cybersecurity', checked: false }, { id: '8', value: 'DevOps', checked: false }],
-      interests: [],
-      team_preference: 3,
-      class_type: [],
-    },
+  } = useForm<FormData>({
+    resolver: zodResolver(schema) as Resolver<FormData>,
+    defaultValues,
   });
+
+  useEffect(() => {
+    const storedData = getDefaultValues();
+    reset(storedData);
+  }, [reset]);
 
   const { fields, append, remove } = useFieldArray({
     control,
@@ -47,9 +89,14 @@ export function PreferenceForm() {
 
 
   const onSubmit = (data: FormData) => {
-    console.log('Form Data:', data);
-    // TODO: Send data to backend
-    alert('Preferences saved! (Check console for data)');
+    try {
+      localStorage.setItem('userPreferences', JSON.stringify(data));
+      console.log('Form Data saved to localStorage:', data);
+      alert('Preferences saved to local storage!');
+    } catch (error) {
+      console.error('Failed to save preferences to localStorage:', error);
+      alert('Failed to save preferences. Please try again.');
+    }
   };
 
   return (
