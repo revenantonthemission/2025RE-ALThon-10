@@ -23,8 +23,11 @@ services:
     image: jjoonleo/2025re-althon-10-backend
     container_name: backend
     restart: unless-stopped
+    environment:
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - DATABASE_URL=${DATABASE_URL}
     ports:
-      - "${BACKEND_PORT:-8000}:8000"
+      - "${PORT}:8000"
     env_file:
       - ../backend/.env
     networks:
