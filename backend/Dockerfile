@@ -7,6 +7,9 @@ RUN apt-get update && apt-get install -y \
   gcc \
   && rm -rf /var/lib/apt/lists/*
 
+# Copy dependency files
+COPY pyproject.toml ./
+
 # Install uv for faster dependency management
 RUN pip install uv
 
@@ -14,7 +17,6 @@ RUN pip install uv
 COPY pyproject.toml ./
 
 # Install Python dependencies
-# uv sync will generate uv.lock if it doesn't exist
 RUN uv sync
 
 # Copy application code
