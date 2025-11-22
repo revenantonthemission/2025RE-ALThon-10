@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from schemas.student_form import StudentForm
+from backend.schemas.student_form import StudentForm
 
 router = APIRouter(tags=["evaluation"])
 

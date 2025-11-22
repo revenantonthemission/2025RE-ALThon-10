@@ -1,4 +1,10 @@
 fastapi
 uvicorn
-google-genai
 python-dotenv
+google-generativeai
+sqlalchemy
+psycopg2-binary
+pandas
+openpyxl
+lxml
+beautifulsoup4
