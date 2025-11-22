@@ -44,7 +44,7 @@ def find_recommended_course(
     current_user: UserProfile,
     senior_ids: List[int],
     user_target_courses: List[str] = []
-) -> Optional[int]:
+) -> Optional[str]:
     logger.info("추천 과목 산출 시작")
 
     # 1) 현재 사용자가 이미 수강한 과목 ID 집합 생성
@@ -53,56 +53,26 @@ def find_recommended_course(
         if hasattr(c, "course_id"):
             cid = getattr(c, "course_id")
         elif isinstance(c, dict):
-            cid = c.get("course_id") or c.get("id")
+            cid = c.get("course_id") or c.get("id") or c.get("course_id")
         else:
             cid = c
         if cid is not None:
-            taken_course_ids.add(int(cid))
+            taken_course_ids.add(str(cid))
     logger.debug(f"기수강 과목 수: {len(taken_course_ids)}")
 
     # 2) User가 수강 예정인 과목도 제외 집합에 추가
     excluded_course_ids = taken_course_ids.copy()
     for target_cid in user_target_courses:
-        excluded_course_ids.add(int(target_cid) if isinstance(target_cid, str) else target_cid)
+        excluded_course_ids.add(str(target_cid))
 
-<<<<<<< HEAD
     # 3) 선배 UserProfile 리스트 가져오기(return_course_info를 사용해)
     # TODO: senior를 UserProfile로 받은 상태에서, id 추출 해서 arg로 전달
     senior_course_infors = []
-=======
-    # 3) 선배들의 수강 과목 가져오기 (DB 세션 사용)
-    from backend.db.database import SessionLocal
-    from backend.models.user import User
-    from backend.models.course import Course as CourseModel
-    
-    db = SessionLocal()
->>>>>>> 85899a6447fc42f9b2ec04f04cb595b8daab4988
     try:
-        # senior_ids는 User.id (integer)이므로 직접 조회
-        senior_users = db.query(User).filter(User.id.in_(senior_ids)).all()
-        
-        # 4) 겹치는 횟수 cnt - course_code를 course_id로 변환
-        counter = Counter()
-        for user in senior_users:
-            for user_course in user.courses:
-                # course_code로 Course 테이블에서 course_id 조회
-                course = db.query(CourseModel).filter(CourseModel.course_code == user_course.course_code).first()
-                if course and course.id not in excluded_course_ids:
-                    counter[course.id] += 1
-        
-        # 5) 가장 많이 겹치는 과목 반환
-        if not counter:
-            logger.info("겹치는 과목 없음")
-            return None
-
-        most_common_course_id, count = counter.most_common(1)[0]
-        logger.info(f"추천 과목 ID: {most_common_course_id} (출현 횟수: {count})")
-        return most_common_course_id
-        
+        senior_course_infors = return_user_courses(senior_ids)
     except Exception as e:
         logger.error(f"선배 기수강 정보 획득 실패: {e}")
         return None
-<<<<<<< HEAD
 
     # 4) 겹치는 횟수 cnt
     counter = Counter()
@@ -119,10 +89,6 @@ def find_recommended_course(
     most_common_course_id, _ = counter.most_common(1)[0]
     logger.info(f"추천 과목: {most_common_course_id}")
     return most_common_course_id
-=======
-    finally:
-        db.close()
->>>>>>> 85899a6447fc42f9b2ec04f04cb595b8daab4988
 
 # Prompt 문자열로 변경
 def create_gemini_prompt(request_data: AnalysisRequest) -> str:
@@ -130,37 +96,49 @@ def create_gemini_prompt(request_data: AnalysisRequest) -> str:
     Formats the user profile and course information into a single string prompt
     for the Gemini model to analyze.
     """
-    from backend.db.database import SessionLocal
-    from backend.models.course import Course as CourseModel
     
     taken_courses_history: List[CourseHistory] = request_data.user_profile.taken_courses
 
     taken_courses_id_list: List[int] = [history.course_id for history in taken_courses_history]
 
-    # Get database session to fetch course details
-    db = SessionLocal()
-    try:
-        # Query courses by integer ID
-        courses = db.query(CourseModel).filter(CourseModel.id.in_(taken_courses_id_list)).all()
-        # Create a mapping of course_id to course
-        course_map = {course.id: course for course in courses}
-    finally:
-        db.close()
+    taken_courses_detail: List[CourseInfo] = return_course_info(taken_courses_id_list)
 
     course_strings = []
 
-    for history in taken_courses_history:
-        course = course_map.get(history.course_id)
+    for course, history in zip(taken_courses_detail, taken_courses_history):
+        # 각 CourseInfo 객체에서 분석에 필요한 핵심 정보 추출
         
-        if course:
-            course_string = (
-                f"[{course.course_code}] {course.course_name} ({course.credits}학점) "
-                f"담당교수: {course.professor or '미상'} / {course.department or '미상'} 개설. "
-                f"성적: {history.grade}"
+        # CourseInfo 객체인지 확인 (course_code가 있는 경우)
+        if hasattr(course, "course_code") and course.course_code:
+            
+            # 1. 기본 정보 섹션
+            base_info = (
+                f"[{course.course_code}] {course.course_name} (개설년도/학기: {course.year or '미상'}/{course.semester or '미상'} | "
+                f"{course.credits or '미상'}학점 | {course.hours or '미상'}시수) "
+                f"개설: {course.department or '미상'} ({course.major or '미상'}) | 담당교수: {course.professor or '미상'}. "
+                f"강의 시간/장소: {course.class_time_room or '미상'} (정원: {course.capacity or '미상'}). "
             )
+            
+            # 2. 강의 특징 섹션
+            feature_info = (
+                f"특징: {course.target_students or course.recommended_year or '전학년'} 대상. "
+                f"영어강의: {course.english_lecture or 'N'} | 중국어강의: {course.chinese_lecture or 'N'} | "
+                f"인증교과목: {course.approved_course or 'N'} | 우등생과정: {course.honors_course or 'N'}. "
+            )
+
+            # 3. 시험 및 성적 섹션 (CourseHistory에서 성적 정보를 가져옴)
+            # taken_courses_history의 성적 정보를 가져와 추가
+            grade_info = f"성적: {history.grade or '미상'}."
+            exam_info = f"시험일정: {course.exam_date or '미상'}."
+            
+            # 4. 상세 정보 섹션 (비고/개요 등)
+            detail_info = f"상세설명(개요/비고): {course.description or course.remarks or '내용 없음'}."
+            
+            course_string = base_info + feature_info + grade_info + exam_info + detail_info
+            
         else:
-            # Fallback if course not found
-            course_string = f"[ID:{history.course_id}] 성적: {history.grade}"
+            # CourseHistory 객체 폴백 (CourseInfo가 아닌 경우)
+            course_string = f"[ID: {course.course_id}] 성적: {course.grade}"
             
         course_strings.append(course_string)
 
