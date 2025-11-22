@@ -70,6 +70,7 @@ def find_recommended_course(
     try:
         senior_course_infors = return_user_courses(senior_ids)
     except Exception as e:
+        logger.error(f"선배 기수강 정보 획득 실패: {e}")
         return None
 
     # 4) 겹치는 횟수 cnt
