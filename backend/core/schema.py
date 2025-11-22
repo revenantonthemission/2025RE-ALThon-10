@@ -31,7 +31,7 @@ class CourseInfo(BaseModel):
     course_name: str = Field(description="강의명")
     syllabus_text: str = Field(description="강의계획서 전체 텍스트")
 
-# --- [NEW] API 요청용 통합 모델 ---
+# User prompt 합체
 class AnalysisRequest(BaseModel):
     user_profile: UserProfile
     course_info: CourseInfo
