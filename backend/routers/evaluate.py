@@ -46,13 +46,15 @@ def evaluate_course(course_id: int, request: EvaluateRequest, db: Session = Depe
         target_courses=[course_info]
     )
 
-    # 4) Parse the JSON response (return_total_result returns List[str] with JSON strings)
+    # 4) Parse the JSON response
     if not results or len(results) == 0:
         raise HTTPException(status_code=500, detail="Failed to get evaluation result")
     
-    # Parse the first result (JSON string) into GeminiResponse
-    result_json = json.loads(results[0])
+    # results[0] is now a dict: {"evaluation": json_str, "recommendation": str}
+    result_item = results[0]
+    result_json = json.loads(result_item["evaluation"])
     evaluation_result = GeminiResponse.model_validate(result_json)
+    recommendation = result_item["recommendation"]
 
     # 5) Return response in API spec format
     return {
@@ -65,5 +67,6 @@ def evaluate_course(course_id: int, request: EvaluateRequest, db: Session = Depe
             }
             for detail in evaluation_result.details
         ],
-        "summary": evaluation_result.summary
+        "summary": evaluation_result.summary,
+        "recommendation": recommendation
     }

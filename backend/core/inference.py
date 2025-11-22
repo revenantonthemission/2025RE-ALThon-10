@@ -13,7 +13,6 @@ from backend.core.neighbor import get_similar_users
 
 load_dotenv()
 
-
 SYSPROMPT = """
 You are an expert academic advisor specializing in predicting is a student is fit for certain university courses. 
 
@@ -106,12 +105,16 @@ def create_gemini_prompt(request_data: AnalysisRequest) -> str:
     
     for course, history in zip(taken_courses_detail, taken_courses_history):
         # 각 CourseInfo 객체에서 분석에 필요한 핵심 정보 추출
-        course_string = (
-            f"[{course.course_code}] {course.course_name} ({course.credits}학점 / {course.semester}) "
-            f"담당교수: {course.professor or '미상'} / {course.department or '미상'} 개설. "
-            f"강의 시간: {course.class_time_room or '미상'}"
-            f"유저가 받은 성적: {history.grade}"
-        )
+        if hasattr(course, "course_code"):
+            course_string = (
+                f"[{course.course_code}] {course.course_name} ({course.credits}학점 / {course.semester}) "
+                f"담당교수: {course.professor or '미상'} / {course.department or '미상'} 개설. "
+                f"강의 시간: {course.class_time_room or '미상'}"
+            )
+        else:
+            # CourseHistory object fallback
+            course_string = f"[{course.course_id}] 성적: {course.grade}"
+            
         course_strings.append(course_string)
 
     # 모든 과목 정보를 줄바꿈으로 구분하여 하나의 문자열로 결합
@@ -234,9 +237,6 @@ def return_total_result(count: int, user_profile: UserProfile, target_courses: L
         
         # Gemini 호출 및 결과 취합
         result = call_gemini(request_data)
-        total_results.append(result)
-        logger.debug(f"Gemini 결과 추가 (len={len(result) if result else 0})")
-
         # 선배들로부터 추천 과목 찾기
         user_profile_str = extract_profile_text(user_profile)
 
@@ -247,7 +247,10 @@ def return_total_result(count: int, user_profile: UserProfile, target_courses: L
         most_common_course = find_recommended_course(user_profile, senior_ids)
         logger.info(f"추천 과목: {most_common_course}")
 
-        total_results.append(most_common_course)
+        total_results.append({
+            "evaluation": result,
+            "recommendation": most_common_course
+        })
 
     return total_results
 

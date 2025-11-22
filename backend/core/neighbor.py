@@ -56,6 +56,7 @@ def find_similar_users(db: Session, query_vector: List[float], k: int = 5) -> Li
         )
         duration_ms = (time.perf_counter() - start) * 1000
         logger.info(f"kNN 검색 완료: k={k}, 결과={len(similar_users)}건, 소요={duration_ms:.1f}ms")
+        ids = []
         if similar_users:
             try:
                 ids = [u.id for u in similar_users if hasattr(u, 'id')]
@@ -63,8 +64,8 @@ def find_similar_users(db: Session, query_vector: List[float], k: int = 5) -> Li
             except Exception:
                 logger.debug("유사 사용자 ID를 로깅하는 중 오류가 발생했지만 검색 결과에는 영향이 없습니다.")
         return ids
-    except Exception:
-        logger.error("kNN 검색 중 오류 발생")
+    except Exception as e:
+        logger.error(f"kNN 검색 중 오류 발생 : {e}")
         raise
 
 # --- 통합 메인 파이프라인 함수 (Top K User 반환) ---
