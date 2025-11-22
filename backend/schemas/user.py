@@ -25,6 +25,7 @@ class UserBase(BaseModel):
     name: str
     major: str
     grade_level: int
+    embedding: Optional[List[float]] = None
 
 class UserCreate(UserBase):
     pass

@@ -1,6 +1,7 @@
 from sqlalchemy import Column, Integer, String, Float, DateTime, ForeignKey
 from sqlalchemy.orm import relationship
 from datetime import datetime
+from pgvector.sqlalchemy import Vector
 from backend.db.database import Base
 
 class User(Base):
@@ -11,6 +12,7 @@ class User(Base):
     name = Column(String)
     major = Column(String)
     grade_level = Column(Integer)
+    embedding = Column(Vector(1024))  # 1024-dimensional vector for Gemini embeddings
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 

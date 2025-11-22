@@ -15,7 +15,7 @@ services:
     restart: unless-stopped
 
   db:
-    image: postgres:15
+    image: pgvector/pgvector:pg15
     container_name: course_simulator_db
     environment:
       - POSTGRES_USER=user
