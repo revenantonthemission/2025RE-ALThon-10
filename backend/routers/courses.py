@@ -19,6 +19,8 @@ def read_courses(skip: int = 0, limit: int = 100, db: Session = Depends(get_db))
     courses = repo.get_all_courses(skip=skip, limit=limit)
     return courses
 
+from backend.core.inference import return_total_result
+
 @router.post("/courses/{course_id}/evaluate", response_model=GeminiResponse)
 def evaluate_course(
     course_id: int,
@@ -67,40 +69,40 @@ Recommended Year: {course.recommended_year or 'N/A'}
     
     course_info = CourseInfo(
         course_name=course.course_name,
+        course_code=course.course_code,
+        department=course.department or "",
+        major=course.major or "",
+        professor=course.professor or "",
+        credits=course.credits or 0.0,
+        class_time_room=course.class_time_room or "",
+        description=course.description or "",
+        remarks=course.remarks or "",
+        target_students=course.target_students or "",
+        recommended_year=course.recommended_year or "",
         syllabus_text=syllabus_text
     )
     
-    # Create analysis request
-    analysis_request = AnalysisRequest(
-        user_profile=user_profile,
-        course_info=course_info
-    )
-    
-    # TODO: Call Gemini API here with analysis_request
-    # For now, return a mock response
-    mock_response = GeminiResponse(
-        course_id=course.course_code,
-        details=[
-            {
-                "criteria": "학습 적합도",
-                "score": 4,
-                "reason": f"수강 이력: {len(user_profile.taken_courses)}개 과목 이수"
-            },
-            {
-                "criteria": "평가 방식 적합도",
-                "score": user_profile.eval_preference,
-                "reason": f"평가 선호도 {user_profile.eval_preference}/5"
-            },
-            {
-                "criteria": "팀 프로젝트 적합도",
-                "score": user_profile.team_preference,
-                "reason": f"팀 프로젝트 선호도 {user_profile.team_preference}/5"
-            }
-        ],
-        summary=f"관심 분야: {', '.join(user_profile.interests)}. 선호 출석 방식: {', '.join(user_profile.attendence_type)}. 전반적으로 적합한 과목입니다."
-    )
-    
-    return mock_response
+    # Call Gemini API via return_total_result
+    # We request 1 iteration for this single course evaluation
+    try:
+        results = return_total_result(
+            count=1,
+            user_profile=user_profile,
+            target_courses=[course_info]
+        )
+        
+        if not results:
+            raise HTTPException(status_code=500, detail="Failed to generate evaluation")
+            
+        # Parse the JSON string result
+        # return_total_result returns a list of JSON strings
+        json_str = results[0]
+        gemini_response = GeminiResponse.model_validate_json(json_str)
+        
+        return gemini_response
+        
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"AI evaluation failed: {str(e)}")
 
 
 
