@@ -41,12 +41,14 @@ source = { virtual = "." }
 dependencies = [
     { name = "fastapi", extra = ["all"] },
     { name = "google-genai" },
+    { name = "python-dotenv" },
 ]
 
 [package.metadata]
 requires-dist = [
     { name = "fastapi", extras = ["all"], specifier = ">=0.121.3" },
     { name = "google-genai", specifier = ">=1.52.0" },
+    { name = "python-dotenv", specifier = ">=1.2.1" },
 ]
 
 [[package]]
