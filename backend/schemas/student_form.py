@@ -46,7 +46,7 @@ class StudentForm(BaseModel):
         ..., alias="수업 출석 방식"
     )
 
-    # 6. 선택한 과목들 (YOUR MISSING PART)
+    # 6. 선택한 과목들 
     selected_subject_ids: List[int] = Field(..., alias="선택한 과목")
 
     class Config:
