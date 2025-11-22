@@ -3,12 +3,13 @@ from google.genai import types
 from os import getenv
 from pydantic import BaseModel
 from dotenv import load_dotenv
-from schema import GeminiResponse, AnalysisRequest
+from schema import GeminiResponse, AnalysisRequest, UserProfile
+from typing import List
+import time
 import json
 
 load_dotenv()
 
-CONFIG_PATH = "./config.json"
 SYSPROMPT = """
 You are an expert academic advisor specializing in predicting is a student is fit for certain university courses. 
 
@@ -28,11 +29,7 @@ Write all text content in Korean.
 
 client = genai.Client()
 
-# Util function to open and load json file
-def load_json(path: str):
-    with open(path, "r", encoding="utf8") as f:
-        return json.load(f)
-    
+# 개별 요청 함수
 def call_gemini(user_prompt: AnalysisRequest):
 
     # Define config
@@ -41,9 +38,6 @@ def call_gemini(user_prompt: AnalysisRequest):
         response_mime_type="application/json",
         response_schema=GeminiResponse
     )
-
-    # Get user prompt
-    user_prompt = AnalysisRequest
 
     # Make request
     response = client.models.generate_content(
@@ -54,11 +48,26 @@ def call_gemini(user_prompt: AnalysisRequest):
 
     return response.text
 
-if __name__=="__main__":
+# BE에서 호출할 함수
+def return_total_result(count: int, user_profile: UserProfile) -> List[GeminiResponse]:
+
+    total_results: List[GeminiResponse] = []
     
-    config = load_json(CONFIG_PATH)
-    SYSPROMPT = config.get("sys_prompt")
+    # 일단은 async 아니고 무식하게
+    for i in range(1, count + 1):
 
-    prompt = ""
+        if i > 1:
+            time.sleep(0.3) 
+            
+        # 개별 요청 Argument 구성, 과목 정보는 지금은 생략
+        request_data = AnalysisRequest(user_profile=user_profile, course_info="")
+        
+        # Gemini 호출 및 결과 취합
+        result = call_gemini(request_data)
+        total_results.append(result)
+    
+    # GeminiResponse의 List로 반환
+    return total_results
 
-    print(call_gemini(prompt))
+if __name__=="__main__":
+    pass
