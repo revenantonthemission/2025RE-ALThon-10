@@ -6,7 +6,7 @@ from schema import GeminiResponse, AnalysisRequest, UserProfile, CourseInfo
 from typing import List, Optional
 import time
 from collections import Counter
-from backend.routers.courses import return_user_courses, return_course_info
+from utils import return_user_courses, return_course_info
 import json
 from loguru import logger
 from neighbor import get_similar_users
