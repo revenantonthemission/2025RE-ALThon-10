@@ -1,0 +1,47 @@
+version: '3'
+
+vars:
+  GOOS: "{{default OS .GOOS}}"
+  DC_FILE: "docker/app.yml"
+  SLEEP_CMD: '{{if eq .GOOS "windows"}}timeout{{else}}sleep{{end}}'
+
+tasks:
+  default:
+    cmds:
+      - task: test
+
+  test:
+    desc: "Run tests (placeholder)"
+    cmds:
+      - echo "No tests defined yet."
+
+  build:
+    desc: "Build docker images"
+    cmds:
+      - "docker compose -f {{.DC_FILE}} build"
+
+  start:
+    desc: "Start services"
+    deps: [build]
+    cmds:
+      - "docker compose -f {{.DC_FILE}} up -d"
+
+  stop:
+    desc: "Stop services"
+    cmds:
+      - "docker compose -f {{.DC_FILE}} stop"
+      - "docker compose -f {{.DC_FILE}} rm -f"
+
+  restart:
+    desc: "Restart services"
+    cmds:
+      - task: stop
+      - task: sleep
+      - task: start
+
+  sleep:
+    desc: "Sleep for a duration"
+    vars:
+      DURATION: "{{default 5 .DURATION}}"
+    cmds:
+      - "{{.SLEEP_CMD}} {{.DURATION}}"
