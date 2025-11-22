@@ -17,14 +17,20 @@ class GeminiResponse(BaseModel):
 class CourseHistory(BaseModel):
     course_id: str
     grade: str
+    
+    class Config:
+        from_attributes = True
 
 # 유저 정보 종합
 class UserProfile(BaseModel):
     taken_courses: List[CourseHistory] = Field(description="이미 수강한 과목 리스트")
-    eval_preference: int = Field(description="평가 방식 선호도 (1:시험선호 ~ 5:과제선호)")
-    interests: List[str] = Field(description="관심있는 적성 분야")
-    team_preference: int = Field(description="조별과제 선호도 (1:매우싫음 ~ 5:매우좋음)")
-    attendence_type: List[str] = Field(description="선호하는 출석 방식")
+    eval_preference: int = Field(default=3, description="평가 방식 선호도 (1:시험선호 ~ 5:과제선호)")
+    interests: List[str] = Field(default_factory=list, description="관심있는 적성 분야")
+    team_preference: int = Field(default=3, description="조별과제 선호도 (1:매우싫음 ~ 5:매우좋음)")
+    attendence_type: List[str] = Field(default_factory=list, description="선호하는 출석 방식")
+    
+    class Config:
+        from_attributes = True
 
 # 과목별 정보
 class CourseInfo(BaseModel):
