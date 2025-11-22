@@ -3,5 +3,5 @@
 venv/
 .env
 uv.lock
-backend/model/
-backend/core/model/
+model/
+core/model
