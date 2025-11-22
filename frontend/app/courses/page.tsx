@@ -1,5 +1,6 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import useSWR from 'swr';
 import { getCourses } from '@/app/_lib/api/courses';
 import { Course } from '@/app/_types/course';
@@ -10,10 +11,15 @@ function coursesFetcher(): Promise<Course[]> {
 }
 
 export default function CoursesPage() {
+  const router = useRouter();
   const { data, error, isLoading } = useSWR<Course[]>(
     'courses',
     coursesFetcher
   );
+
+  const handleCourseClick = (courseId: number) => {
+    router.push(`/result?courseId=${courseId}`);
+  };
 
   if (isLoading) {
     return (
@@ -90,7 +96,11 @@ export default function CoursesPage() {
                 </thead>
                 <tbody>
                   {data.map((course) => (
-                    <tr key={course.id}>
+                    <tr
+                      key={course.id}
+                      onClick={() => handleCourseClick(course.id)}
+                      className="cursor-pointer hover:bg-base-200 transition-colors"
+                    >
                       <td className="font-mono font-semibold">
                         {course.course_code}
                       </td>

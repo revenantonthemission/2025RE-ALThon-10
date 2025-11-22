@@ -30,3 +30,7 @@ class CourseRepository:
         """
         courses = self.db.query(CourseModel).offset(skip).limit(limit).all()
         return [CourseSummary.from_model(course) for course in courses]
+
+    def get_course_by_id(self, course_id: int) -> Optional[CourseModel]:
+        """Get a single course by ID."""
+        return self.db.query(CourseModel).filter(CourseModel.id == course_id).first()
