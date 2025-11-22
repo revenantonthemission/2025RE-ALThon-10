@@ -17,7 +17,7 @@ SYSPROMPT = """
 You are an expert academic advisor specializing in predicting is a student is fit for certain university courses. 
 
 You will be provided the student's following information:
-- The student's prior taken classes (the information text will be long by nature, but the length doesn't necessarily mean importance. Refer to it with objectivity.)
+- The student's prior taken classes (the information text will be long by nature, but the length doesn't necessarily mean importance. Refer to it with objectivity. Do consider the grade the user got in each class, as a reference point on assessing the user's strong/weak points.)
 - Evaluation method preference, projects/assignments(1) vs. written tests(5) 
 - Interested areas as keywords
 - Emphasis on cooperative projects/assignments (Prefer team project: 5 - Hate team project: 1)
@@ -102,18 +102,41 @@ def create_gemini_prompt(request_data: AnalysisRequest) -> str:
     taken_courses_detail: List[CourseInfo] = return_course_info(taken_courses_id_list)
 
     course_strings = []
-    
+
     for course, history in zip(taken_courses_detail, taken_courses_history):
         # 각 CourseInfo 객체에서 분석에 필요한 핵심 정보 추출
-        if hasattr(course, "course_code"):
-            course_string = (
-                f"[{course.course_code}] {course.course_name} ({course.credits}학점 / {course.semester}) "
-                f"담당교수: {course.professor or '미상'} / {course.department or '미상'} 개설. "
-                f"강의 시간: {course.class_time_room or '미상'}"
+        
+        # CourseInfo 객체인지 확인 (course_code가 있는 경우)
+        if hasattr(course, "course_code") and course.course_code:
+            
+            # 1. 기본 정보 섹션
+            base_info = (
+                f"[{course.course_code}] {course.course_name} (개설년도/학기: {course.year or '미상'}/{course.semester or '미상'} | "
+                f"{course.credits or '미상'}학점 | {course.hours or '미상'}시수) "
+                f"개설: {course.department or '미상'} ({course.major or '미상'}) | 담당교수: {course.professor or '미상'}. "
+                f"강의 시간/장소: {course.class_time_room or '미상'} (정원: {course.capacity or '미상'}). "
             )
+            
+            # 2. 강의 특징 섹션
+            feature_info = (
+                f"특징: {course.target_students or course.recommended_year or '전학년'} 대상. "
+                f"영어강의: {course.english_lecture or 'N'} | 중국어강의: {course.chinese_lecture or 'N'} | "
+                f"인증교과목: {course.approved_course or 'N'} | 우등생과정: {course.honors_course or 'N'}. "
+            )
+
+            # 3. 시험 및 성적 섹션 (CourseHistory에서 성적 정보를 가져옴)
+            # taken_courses_history의 성적 정보를 가져와 추가
+            grade_info = f"성적: {history.grade or '미상'}."
+            exam_info = f"시험일정: {course.exam_date or '미상'}."
+            
+            # 4. 상세 정보 섹션 (비고/개요 등)
+            detail_info = f"상세설명(개요/비고): {course.description or course.remarks or '내용 없음'}."
+            
+            course_string = base_info + feature_info + grade_info + exam_info + detail_info
+            
         else:
-            # CourseHistory object fallback
-            course_string = f"[{course.course_id}] 성적: {course.grade}"
+            # CourseHistory 객체 폴백 (CourseInfo가 아닌 경우)
+            course_string = f"[ID: {course.course_id}] 성적: {course.grade}"
             
         course_strings.append(course_string)
 
