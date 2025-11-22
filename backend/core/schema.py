@@ -9,7 +9,7 @@ class AnalysisDetail(BaseModel):
 
 # Gemini한테 반환받을 형식
 class GeminiResponse(BaseModel):
-    course_id: str
+    course_id: int
     details: List[AnalysisDetail]
     summary: str
 

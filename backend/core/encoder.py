@@ -3,19 +3,62 @@ from typing import List, Optional
 from loguru import logger
 import time
 import numpy as np
+import os
 
 # --- 모델 설정 및 로드 ---
 EMBEDDING_MODEL_NAME = "jhgan/ko-sroberta-multitask"
+LOCAL_MODEL_PATH = "./model/"
 EMBEDDER: Optional[SentenceTransformer] = None
 
-try:
-    start_time = time.perf_counter()
-    EMBEDDER = SentenceTransformer(EMBEDDING_MODEL_NAME)
-    load_duration_ms = (time.perf_counter() - start_time) * 1000
-    logger.info(f"임베딩 모델 로드 성공: {EMBEDDING_MODEL_NAME}, 소요={load_duration_ms:.1f}ms")
-except Exception as e:
-    logger.error(f"임베딩 모델 로드 실패: {e}")
-    EMBEDDER = None
+def initialize_embedder():
+    """
+    Checks for local model, downloads/saves if missing, and initializes the EMBEDDER globally.
+    """
+    global EMBEDDER
+    
+    # Check if the model directory exists and appears to contain model files
+    local_model_exists = os.path.isdir(LOCAL_MODEL_PATH) and os.path.exists(os.path.join(LOCAL_MODEL_PATH, 'tokenizer.json'))
+
+    model_source = EMBEDDING_MODEL_NAME
+    
+    if local_model_exists:
+        # A. Load from local path
+        model_source = LOCAL_MODEL_PATH
+        logger.info(f"로컬 모델 감지됨. 로컬 경로에서 로드 시작: {LOCAL_MODEL_PATH}")
+    else:
+        # B. Download and save
+        logger.warning(f"로컬 모델 ({LOCAL_MODEL_PATH})이 없습니다. 원격에서 다운로드 후 저장합니다.")
+        try:
+            # First, download the model (loads from remote)
+            temp_model = SentenceTransformer(EMBEDDING_MODEL_NAME)
+            
+            # Ensure the directory exists before saving
+            os.makedirs(LOCAL_MODEL_PATH, exist_ok=True)
+            
+            # Save the model to the local directory
+            temp_model.save(LOCAL_MODEL_PATH)
+            logger.success(f"모델 다운로드 및 저장 성공: {LOCAL_MODEL_PATH}")
+            
+            # The model is now local, so we load from the local path below
+            model_source = LOCAL_MODEL_PATH 
+            
+        except Exception as e:
+            logger.error(f"모델 다운로드 및 저장 실패. 계속 진행하려면 인터넷 연결이 필요할 수 있습니다: {e}")
+            # Fallback: Attempt to load from remote/cache directly if save failed
+            model_source = EMBEDDING_MODEL_NAME
+    
+    # Final load attempt (will use LOCAL_MODEL_PATH if successful above, or EMBEDDING_MODEL_NAME otherwise)
+    try:
+        start_time = time.perf_counter()
+        EMBEDDER = SentenceTransformer(model_source)
+        load_duration_ms = (time.perf_counter() - start_time) * 1000
+        logger.info(f"임베딩 모델 로드 성공: {model_source}, 소요={load_duration_ms:.1f}ms")
+    except Exception as e:
+        logger.error(f"임베딩 모델 로드 최종 실패: {e}")
+        EMBEDDER = None
+
+# 즉시 함수 실행
+initialize_embedder()
 
 def generate_embeddings(texts: List[str], batch_size: int = 32) -> List[List[float]]:
     """

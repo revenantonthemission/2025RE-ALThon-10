@@ -2,14 +2,14 @@ from google import genai
 from google.genai import types
 from os import getenv
 from dotenv import load_dotenv
-from schema import GeminiResponse, AnalysisRequest, UserProfile, CourseInfo
+from backend.core.schema import GeminiResponse, AnalysisRequest, UserProfile, CourseInfo
 from typing import List, Optional
 import time
 from collections import Counter
-from utils import return_user_courses, return_course_info
+from backend.core.utils import return_user_courses, return_course_info
 import json
 from loguru import logger
-from neighbor import get_similar_users
+from backend.core.neighbor import get_similar_users
 
 load_dotenv()
 
@@ -42,8 +42,8 @@ except Exception as e:
 
 # TODO: 직접 db 접근하지 않고 BE에서 제공하는 함수로 연결
 def find_recommended_course(
-    current_user,
-    senior_ids: List[str],
+    current_user: UserProfile,
+    senior_ids: List[int],
     user_target_courses: List[str] = []
 ) -> Optional[str]:
     logger.info("추천 과목 산출 시작")
@@ -67,6 +67,7 @@ def find_recommended_course(
         excluded_course_ids.add(str(target_cid))
 
     # 3) 선배 UserProfile 리스트 가져오기(return_course_info를 사용해)
+    # TODO: senior를 UserProfile로 받은 상태에서, id 추출 해서 arg로 전달
     try:
         senior_course_infors = return_user_courses(senior_ids)
     except Exception as e:
@@ -88,6 +89,39 @@ def find_recommended_course(
     logger.info(f"추천 과목: {most_common_course_id}")
     return most_common_course_id
 
+# Prompt 문자열로 변경
+def create_gemini_prompt(request_data: AnalysisRequest) -> str:
+    """
+    Formats the user profile and course information into a single string prompt
+    for the Gemini model to analyze.
+    """
+    
+    # 1. User Profile Details (similar to extract_profile_text but for the prompt)
+    user_info = f"""
+    --- 학생 정보 ---
+    - 기수강 과목: {', '.join([c.course_code for c in request_data.user_profile.taken_courses])}
+    - 평가 방식 선호 (1:시험, 5:과제): {request_data.user_profile.eval_preference}
+    - 관심 분야: {', '.join(request_data.user_profile.interests)}
+    - 팀 프로젝트 선호 (1:매우 싫음, 5:매우 좋음): {request_data.user_profile.team_preference}
+    - 선호 출석/수업 방식: {', '.join(request_data.user_profile.attendence_type)}
+    """
+
+    # 2. Course Information
+    course_info = f"""
+    --- 분석 대상 과목 정보 ---
+    - 과목 코드: {request_data.course_info.course_code}
+    - 과목명: {request_data.course_info.course_name}
+    - 평가 방식: {request_data.course_info.evaluation_method}
+    - 프로젝트/과제 비중: {request_data.course_info.project_ratio}
+    - 팀 과제 유무: {request_data.course_info.team_project_yn}
+    - 수업/출석 방식: {request_data.course_info.teaching_method}
+    """
+    
+    # 3. Final instruction
+    final_instruction = "\n\n위 학생 정보를 바탕으로 아래 과목에 대한 적합도를 분석하고 JSON 형식으로 결과를 반환하시오."
+    
+    return user_info + course_info + final_instruction
+
 # 개별 요청 함수
 def call_gemini(user_prompt: AnalysisRequest):
     if client is None:
@@ -95,6 +129,8 @@ def call_gemini(user_prompt: AnalysisRequest):
         raise RuntimeError("Gemini client not initialized")
 
     logger.info("Gemini 요청 시작")
+
+    prompt_str = create_gemini_prompt(user_prompt)
 
     # Define config
     config = types.GenerateContentConfig(
@@ -106,7 +142,7 @@ def call_gemini(user_prompt: AnalysisRequest):
     # Make request
     response = client.models.generate_content(
         model="gemini-2.5-flash",
-        contents=user_prompt,
+        contents=prompt_str,
         # Structured Response config
         config=config)
     logger.info(f"Gemini 응답 수신: 길이={len(response.text) if hasattr(response, 'text') and response.text else 0}")
@@ -161,7 +197,7 @@ def return_total_result(count: int, user_profile: UserProfile, target_courses: L
             time.sleep(0.3) 
             
         # 개별 요청 Argument 구성, 과목 정보는 지금은 생략
-        request_data = AnalysisRequest(user_profile=user_profile, course_info="")
+        request_data = AnalysisRequest(user_profile=user_profile, course_info=target_courses[i-1])
         
         # Gemini 호출 및 결과 취합
         result = call_gemini(request_data)
@@ -169,12 +205,13 @@ def return_total_result(count: int, user_profile: UserProfile, target_courses: L
         logger.debug(f"Gemini 결과 추가 (len={len(result) if result else 0})")
 
         # 선배들로부터 추천 과목 찾기
+        #user_profile_str = extract_profile_text(user_profile)
+
         #logger.info("유사 사용자 검색 시작")
-        #senior_profiles: List[UserProfile] = get_similar_users(user_profile, k=5)
+        #senior_ids: List[int] = get_similar_users(user_profile_str, k=5)
         #logger.info("유사 사용자 검색 완료")
 
-        #user_profile_str = extract_profile_text(user_profile)
-        #most_common_course = find_recommended_course(user_profile_str, senior_profiles)
+        #most_common_course = find_recommended_course(user_profile, senior_ids)
         #logger.info(f"추천 과목: {most_common_course}")
 
         #total_results.append(most_common_course)
