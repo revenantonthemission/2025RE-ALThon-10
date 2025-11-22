@@ -32,4 +32,5 @@ export interface CourseEvaluationResponse {
   course_id: string;
   details: AnalysisDetail[];
   summary: string;
+  recommendation?: number | null; // Recommended course ID (optional)
 }

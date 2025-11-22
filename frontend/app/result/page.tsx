@@ -1,13 +1,19 @@
 'use client';
 
-import { Suspense, useMemo, useEffect, useState } from 'react';
+import { Suspense, useMemo, useEffect, useState, useRef } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { RadarChart, type RadarChartData } from './_components/radar-chart';
 import { CourseResultTile, type CourseInfo } from './_components/course-result-tile';
+import { RecommendationTile } from './_components/recommendation-tile';
 import { usePreferencesStore } from '@/app/_stores/preferences';
 import { evaluateCourse, getCourses } from '@/app/_lib/api/courses';
-import type { CourseEvaluationResponse, UserProfile } from '@/app/_types/course';
+import type {
+  CourseEvaluationResponse,
+  UserProfile,
+  AnalysisDetail,
+} from '@/app/_types/course';
 import type { Course } from '@/app/_types/course';
 
 function ResultContent() {
@@ -16,51 +22,76 @@ function ResultContent() {
   const courseId = courseIdParam ? parseInt(courseIdParam, 10) : null;
 
   const preferences = usePreferencesStore((state) => state.preferences);
-  const [evaluation, setEvaluation] = useState<CourseEvaluationResponse | null>(null);
+  const queryClient = useQueryClient();
   const [course, setCourse] = useState<Course | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
-  // Fetch course evaluation when courseId is available
+  // Build userProfile from preferences
+  const userProfile: UserProfile | null = preferences
+    ? {
+        taken_courses: preferences.completed_courses.map(c => ({
+          course_id: c.id,
+          grade: c.grade,
+        })),
+        eval_preference: preferences.eval_preference,
+        interests: preferences.interests.map(i => i.value),
+        team_preference: preferences.team_preference,
+        attendence_type: preferences.class_type,
+      }
+    : null;
+
+  // Fetch course evaluation using React Query
+  const {
+    data: evaluation,
+    isLoading,
+    error: queryError,
+  } = useQuery<CourseEvaluationResponse>({
+    queryKey: ['evaluate-course', courseId],
+    queryFn: async () => {
+      if (!courseId || !userProfile) {
+        throw new Error('Course ID and preferences are required');
+      }
+      return evaluateCourse(courseId, userProfile);
+    },
+    enabled: !!courseId && !!userProfile,
+    // Use default options from QueryClient (staleTime: Infinity, refetchOnMount: false)
+  });
+
+  // Fetch course details
   useEffect(() => {
-    if (!courseId || !preferences) return;
+    if (!courseId) return;
 
-    const fetchEvaluation = async () => {
-      setIsLoading(true);
-      setError(null);
-
+    const fetchCourse = async () => {
       try {
-        // Transform preferences to UserProfile format
-        const userProfile: UserProfile = {
-          taken_courses: preferences.completed_courses.map(c => ({
-            course_id: c.id,
-            grade: c.grade,
-          })),
-          eval_preference: preferences.eval_preference,
-          interests: preferences.interests.map(i => i.value),
-          team_preference: preferences.team_preference,
-          attendence_type: preferences.class_type,
-        };
-
-        // Fetch course details
         const courses = await getCourses();
         const foundCourse = courses.find(c => c.id === courseId);
         if (foundCourse) {
           setCourse(foundCourse);
         }
-
-        // Evaluate the course
-        const evalResult = await evaluateCourse(courseId, userProfile);
-        setEvaluation(evalResult);
       } catch (err) {
-        setError(err instanceof Error ? err.message : 'Failed to evaluate course');
-      } finally {
-        setIsLoading(false);
+        // Silently handle error - course display is not critical
+        console.error('Failed to fetch course details:', err);
       }
     };
 
-    fetchEvaluation();
-  }, [courseId, preferences]);
+    fetchCourse();
+  }, [courseId]);
+
+  // Refetch when preferences change
+  const prevPreferencesRef = useRef(preferences);
+  useEffect(() => {
+    // Only refetch if preferences actually changed
+    if (preferences && prevPreferencesRef.current !== preferences) {
+      queryClient.refetchQueries({ queryKey: ['evaluate-course'] });
+      prevPreferencesRef.current = preferences;
+    }
+  }, [preferences, queryClient]);
+
+  // Convert query error to string for display
+  const error = queryError
+    ? queryError instanceof Error
+      ? queryError.message
+      : 'Failed to evaluate course'
+    : null;
 
   // Generate chart data from evaluation results
   const chartData = useMemo<RadarChartData | null>(() => {
@@ -68,11 +99,11 @@ function ResultContent() {
 
     // Use evaluation details to create radar chart
     return {
-      labels: evaluation.details.map(detail => detail.criteria),
+      labels: evaluation.details.map((detail: AnalysisDetail) => detail.criteria),
       datasets: [
         {
           label: 'Suitability Score',
-          data: evaluation.details.map(detail => (detail.score / 5) * 100), // Convert 1-5 scale to 0-100
+          data: evaluation.details.map((detail: AnalysisDetail) => (detail.score / 5) * 100), // Convert 1-5 scale to 0-100
         },
       ],
     };
@@ -177,7 +208,7 @@ function ResultContent() {
 
     // Calculate average match score
     const avgScore = evaluation.details.length > 0
-      ? evaluation.details.reduce((sum, d) => sum + d.score, 0) / evaluation.details.length
+      ? evaluation.details.reduce((sum: number, d: AnalysisDetail) => sum + d.score, 0) / evaluation.details.length
       : 0;
     const matchScore = (avgScore / 5) * 100;
 
@@ -201,7 +232,7 @@ function ResultContent() {
               <div className="card-body">
                 <h2 className="card-title text-2xl mb-4">Evaluation Details</h2>
                 <div className="space-y-4">
-                  {evaluation.details.map((detail, index) => (
+                  {evaluation.details.map((detail: AnalysisDetail, index: number) => (
                     <div key={index} className="card bg-base-200 border border-base-300">
                       <div className="card-body">
                         <div className="flex flex-col items-start justify-between gap-4">
@@ -229,6 +260,11 @@ function ResultContent() {
                 </div>
               </div>
             </div>
+          )}
+
+          {/* Recommendation Tile */}
+          {evaluation.recommendation && (
+            <RecommendationTile recommendedCourseId={evaluation.recommendation} />
           )}
 
           {/* Action Buttons */}
