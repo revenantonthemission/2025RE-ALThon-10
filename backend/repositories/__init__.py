@@ -1,6 +1,6 @@
 """
 Repository package for data access layer.
 """
-from backend.repositories.repository import CourseRepository, UserRepository
+from backend.repositories.repository import CourseRepository
 
-__all__ = ["CourseRepository", "UserRepository"]
+__all__ = ["CourseRepository"]
