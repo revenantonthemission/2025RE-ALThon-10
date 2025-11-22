@@ -5,10 +5,10 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useState } from 'react';
 import Link from 'next/link';
-import { AuthCard } from '@/components/auth/auth-card';
-import { FormInput } from '@/components/auth/form-input';
-import { SocialLoginButton } from '@/components/auth/social-login-button';
-import { EmailIcon, PasswordIcon } from '@/components/auth/icons';
+import { AuthCard } from '@/app/(auth)/_components/auth-card';
+import { FormInput } from '@/components/form-input';
+import { SocialLoginButton } from '@/app/(auth)/_components/social-login-button';
+import { EmailIcon, PasswordIcon } from '@/app/(auth)/_components/icons';
 
 const loginSchema = z.object({
   email: z.string().email('Please enter a valid email address'),
